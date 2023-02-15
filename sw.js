@@ -1,11 +1,11 @@
-const cacheName = "CocoNutsScouting";
+const cacheName = "DoFScouting";
 const precacheResources = [
-    "/CocoNuts-Scouting/",
-    "/CocoNuts-Scouting/index.html",
-    "/CocoNuts-Scouting/qrcode.min.js",
-    "/CocoNuts-Scouting/bootstrap.min.css",
-    "/CocoNuts-Scouting/bootstrap.min.css.map",
-    "/CocoNuts-Scouting/jquery-3.6.1.min.js"
+    "/DoF-Scouting/",
+    "/DoF-Scouting/index.html",
+    "/DoF-Scouting/qrcode.min.js",
+    "/DoF-Scouting/bootstrap.min.css",
+    "/DoF-Scouting/bootstrap.min.css.map",
+    "/DoF-Scouting/jquery-3.6.1.min.js"
 ];
 
 self.addEventListener('install', (event) => {
@@ -22,10 +22,10 @@ self.addEventListener('fetch', (event) => {
     if (r) { return r; }
 
     // cache the new resource and return it
-    const response = await fetch(e.request);
+    const response = await fetch(event.request);
     const cache = await caches.open(cacheName);
 
-    cache.put(e.request, response.clone());
+    cache.put(event.request, response.clone());
     return response;
   })());
 });
