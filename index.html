@@ -1,305 +1,629 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>2486 - Coconuts Scouting</title>
-    <script src="jquery-3.6.1.min.js"></script>
-    <script src="qrcode.min.js"></script>
-    <link rel="stylesheet" href="bootstrap.min.css">
-    <style>
-      body {
-        touch-action: manipulation;
-      }
-      label {
-        font-weight: bold;
-        margin-top: 1rem;
-      }
-      .form-label {
-        margin-bottom: 0.1rem;
-      }
-      .form-check label {
-        font-weight: normal;
-        margin-top: auto;
-      }
-      .btn-huge {
-        --bs-btn-padding-y: 5rem;
-        --bs-btn-padding-x: 5rem;
-        --bs-btn-font-size: 7.5rem;
-      }
-      #qrcode img {
-        display: inline-block !important;
-        margin: 2rem 0rem;
-      }
-    </style>
-    <script>
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker
+
+<head>
+  <title>6413 - DoF Scouting (Bruce POC)</title>
+  <script src="jquery-3.6.1.min.js"></script>
+  <script src="qrcode.min.js"></script>
+  <link rel="stylesheet" href="bootstrap.min.css" />
+  <style>
+    body {
+      touch-action: manipulation;
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 1rem;
+    }
+
+    .form-label {
+      margin-bottom: 0.1rem;
+    }
+
+    .form-check label {
+      font-weight: normal;
+      margin-top: auto;
+    }
+
+    .btn-huge {
+      --bs-btn-padding-y: 5rem;
+      --bs-btn-padding-x: 5rem;
+      --bs-btn-font-size: 7.5rem;
+    }
+
+    #qrcode img {
+      display: inline-block !important;
+      margin: 2rem 0rem;
+    }
+  </style>
+  <!-- <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
         .register("sw.js")
         .then(() => console.log("Successfully registered service worker"));
-      }
-    </script>
-  </head>
-  <body>
-    <form>
-      <div class="container">
-        <div class="row">
-          <div class="col text-end">
-            <input type="reset" value="Reset all fields" onClick="javascript:$('body').removeClass('was-validated');">
+    }
+  </script>
+-->
+  <script>
+    const onConfirmRefresh = function (event) {
+        event.preventDefault();
+        return event.returnValue = "Are you sure you want to leave the page?";
+        }
+
+    window.addEventListener( "beforeunload", onConfirmRefresh, { capture: true } );
+  </script>
+</head>
+
+<body>
+  <form>
+    <div class="container">
+
+      <div class="row">
+        <div class="col text-end">
+          <input type="reset" value="Reset all fields" onClick="javascript:$('body').removeClass('was-validated');$('#qrcode').html('');">
+        </div>
+      </div>
+      <!-- /.row -->
+      <div class="row">
+        <div class="col">
+          <label for="TeamNumber-input" class="form-label">Team Number</label>
+          <input type="number" class="form-control" id="TeamNumber-input" min="1" required>
+          <div class="invalid-feedback">
+            Please set the team number.
           </div>
         </div>
-        <div class="row">
+        
+        <div class="col">
+          <label for="Match-input" class="form-label">Match</label>
+          <input type="number" class="form-control" id="Match-input" min="1" required>
+          <div class="invalid-feedback">
+            Please set the match number.
+          </div>
+        </div>
 
-          <div class="col">
-            <label for="TeamNumber-input" class="form-label">Team Number</label>
-            <input type="number" class="form-control" id="TeamNumber-input" min="1" required>
-            <div class="invalid-feedback">
-              Please set the team number.
+        <div class="col">
+          <label for="Scouter-input" class="form-label">Your Initials</label>
+          <input type="text" class="form-control" id="Scouter-input" required>
+          <div class="invalid-feedback">
+            Please enter your initals.
+          </div>
+        </div>
+
+      </div><!-- /.row -->
+
+      <hr class="mt-4 mb-1">
+
+      <div class="row">
+        <div class="col">
+          <label for="AutoCharge-input" class="form-label">Auto Charge Station</label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="AutoCharge-input" id="AutoCharge-0" value="0" required>
+            <label class="form-check-label" for="AutoCharge-0">Did not attempt</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="AutoCharge-input" id="AutoCharge-1" value="2" required>
+            <label class="form-check-label" for="AutoCharge-1">Docked</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="AutoCharge-input" id="AutoCharge-2" value="3" required>
+            <label class="form-check-label" for="AutoCharge-2">Engaged</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="AutoCharge-input" id="AutoCharge-3" value="1" required>
+            <label class="form-check-label" for="AutoCharge-3">Failed</label>
+          </div>
+
+          <label class="form-check-label" for="Mobility-input">Mobility</label>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="Mobility-input">
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="row">
+            <div class="col">
+            <!-- UI change on 06-Mar-2023 to make values clearer to scouts.
+              <label for="DriveSkill-input" class="form-label">Driver Skill</label>
+              <input type="range" class="form-range" id="DriveSkill-input" min="0" max="3" value="0">
+            -->
+              <label for="DriveSkill-input" class="form-label">Driver Skill</label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="DriveSkill-input" id="DriveSkill-0" value="0" required>
+                <label class="form-check-label" for="DriveSkill-0">Not shown</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="DriveSkill-input" id="DriveSkill-1" value="1" required>
+                <label class="form-check-label" for="DriveSkill-1">Below Avg.</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="DriveSkill-input" id="DriveSkill-2" value="2" required checked>
+                <label class="form-check-label" for="DriveSkill-2">Average</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="DriveSkill-input" id="DriveSkill-3" value="3" required>
+                <label class="form-check-label" for="DriveSkill-3">Above Avg.</label>
+                </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="DriveSkill-input" id="DriveSkill-4" value="4" required>
+                <label class="form-check-label" for="DriveSkill-4">Exceptional</label>
+              </div>  
+            </div>
+
+            <div class="col">
+            <!-- UI change on 06-Mar-2023 to make values clearer to scouts.
+              <label for="PlayDefense-input" class="form-label">Plays Defense</label>
+              <input type="range" class="form-range" id="PlayDefense-input" min="0" max="3" value="0">
+            -->
+              <label for="PlayDefense-input" class="form-label">Plays Defense</label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="PlayDefense-input" id="PlayDefense-0" value="0" required checked>
+                <label class="form-check-label" for="PlayDefense-0">Not shown</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="PlayDefense-input" id="PlayDefense-1" value="1" required>
+                <label class="form-check-label" for="PlayDefense-1">Below Avg.</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="PlayDefense-input" id="PlayDefense-2" value="2" required>
+                <label class="form-check-label" for="PlayDefense-2">Average</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="PlayDefense-input" id="PlayDefense-3" value="3" required>
+                <label class="form-check-label" for="PlayDefense-3">Above Avg.</label>
+                </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="PlayDefense-input" id="PlayDefense-4" value="4" required>
+                <label class="form-check-label" for="PlayDefense-4">Exceptional</label>
+              </div>  
+            </div>
+
+            <div class="col">
+            <!-- UI change on 06-Mar-2023 to make values clearer to scouts.
+              <label for="HandleDefense-input" class="form-label">Handle Defense</label>
+              <input type="range" class="form-range" id="HandleDefense-input" min="0" max="3" value="0">
+            -->
+              <label for="HandleDefense-input" class="form-label">Handle Defense</label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="HandleDefense-input" id="HandleDefense-0" value="0" required checked>
+                <label class="form-check-label" for="HandleDefense-0">Not shown</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="HandleDefense-input" id="HandleDefense-1" value="1" required>
+                <label class="form-check-label" for="HandleDefense-1">Below Avg.</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="HandleDefense-input" id="HandleDefense-2" value="2" required>
+                <label class="form-check-label" for="HandleDefense-2">Average</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="HandleDefense-input" id="HandleDefense-3" value="3" required>
+                <label class="form-check-label" for="HandleDefense-3">Above Avg.</label>
+                </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="HandleDefense-input" id="HandleDefense-4" value="4" required>
+                <label class="form-check-label" for="HandleDefense-4">Exceptional</label>
+              </div>
             </div>
           </div>
 
-          <div class="col">
-            <label for="TeamName-input" class="form-label">Team Name</label>
-            <input type="text" class="form-control" id="TeamName-input">
-          </div>
-
-          <div class="col">
-            <label for="Match-input" class="form-label">Match</label>
-            <input type="number" class="form-control" id="Match-input" min="1" required>
-            <div class="invalid-feedback">
-              Please set the match number.
-            </div>
-          </div>
-
-        </div><!-- /.row -->
-
-        <hr class="mt-4 mb-1">
-
-        <div class="row">
-          <div class="col">
-
-            <label for="PrefStart-input" class="form-label">Starting Position</label>
-
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="PrefStart-input" id="PrefStart-1" value="1" required>
-              <label class="form-check-label" for="PrefStart-1">
-                Position 1
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="PrefStart-input" id="PrefStart-2" value="2" required>
-              <label class="form-check-label" for="PrefStart-2">
-                Position 2
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="PrefStart-input" id="PrefStart-3" value="3" required>
-              <label class="form-check-label" for="PrefStart-3">
-                Position 3
-              </label>
-            </div>
-
-            <label class="form-check-label" for="CompatAuto-input">Compatible Autonomous</label>
-            <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" role="switch" id="CompatAuto-input">
-            </div>
-
-          </div>
-          <div class="col">
-            <div class="row">
-              <div class="col">
-                <label for="DriveSkill-input" class="form-label">Driving Skill</label>
-                <input type="range" class="form-range" id="DriveSkill-input" min="1" max="5">
+          <div class="row">
+            <div class="col">
+              <label for="Card-input" class="form-label">Card</label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Card-input" id="Card-0" value="0" checked required>
+                <label class="form-check-label" for="Card-0">
+                  None
+                </label>
               </div>
-              <div class="col">
-                <label for="Aggression-input" class="form-label">Aggression</label>
-                <input type="range" class="form-range" id="Aggression-input" min="1" max="5">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Card-input" id="Card-1" value="1" required>
+                <label class="form-check-label" for="Card-1">
+                  Yellow
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Card-input" id="Card-2" value="2" required>
+                <label class="form-check-label" for="Card-2">
+                  Red
+                </label>
               </div>
             </div>
-
-            <div class="row">
-              <div class="col">
-                <label for="CycleTime-input" class="form-label">Cycle Time</label>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="CycleTime-input" id="CycleTime-1" value="1" required>
-                  <label class="form-check-label" for="CycleTime-1">
-                    Slow
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="CycleTime-input" id="CycleTime-2" value="2" required>
-                  <label class="form-check-label" for="CycleTime-2">
-                    Avg
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="CycleTime-input" id="CycleTime-3" value="3" required>
-                  <label class="form-check-label" for="CycleTime-3">
-                    Fast
-                  </label>
-                </div>
+            <div class="col">
+              <label class="form-check-label" for="NoShow-input">No Show</label>
+              <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" role="switch" id="NoShow-input">
               </div>
-              <div class="col">
-                <label for="PrefScore-input" class="form-label">Preferred Scoring Area</label>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="PrefScore-input" id="PrefScore-1" value="1" required>
-                  <label class="form-check-label" for="PrefScore-1">
-                    Close
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="PrefScore-input" id="PrefScore-2" value="2" required>
-                  <label class="form-check-label" for="PrefScore-2">
-                    Medium
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="PrefScore-input" id="PrefScore-3" value="3" required>
-                  <label class="form-check-label" for="PrefScore-3">
-                    Distant
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="col">
-            <div class="row">
-              <div class="col">
-                <label>Endgame</label>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="Endgame-input" id="Endgame-0" value="0" required>
-                  <label class="form-check-label" for="Endgame-0">
-                    No climb
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="Endgame-input" id="Endgame-1" value="6" required>
-                  <label class="form-check-label" for="Endgame-1">
-                    Low
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="Endgame-input" id="Endgame-2" value="8" required>
-                  <label class="form-check-label" for="Endgame-2">
-                    Mid
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="Endgame-input" id="Endgame-3" value="10" required>
-                  <label class="form-check-label" for="Endgame-3">
-                    High
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="Endgame-input" id="Endgame-4" value="15" required>
-                  <label class="form-check-label" for="Endgame-4">
-                    Traverse
-                  </label>
-                </div>
-              </div>
-              <div class="col">
-
-                <label class="form-check-label" for="Outlier-input">Outlier</label>
-                <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" role="switch" id="Outlier-input">
-                </div>
                 
-                <label class="form-check-label" for="BreakImpact-input">Break Impact</label>
-                <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" role="switch" id="BreakImpact-input">
-                </div>
-                
-                <label class="form-check-label" for="DefenseOnly-input">Defense Only</label>
-                <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" role="switch" id="DefenseOnly-input">
-                </div>
+               <!-- KEEP THIS HERE JUST IN CASE MY POC IS BROKEN -BK 
+
+              <label for="PrefScore-input" class="form-label">Preferred Scoring Area</label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="PrefScore-input" id="PrefScore-1" value="1" required>
+                <label class="form-check-label" for="PrefScore-1">
+                  Close
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="PrefScore-input" id="PrefScore-2" value="2" required>
+                <label class="form-check-label" for="PrefScore-2">
+                  Medium
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="PrefScore-input" id="PrefScore-3" value="3" required>
+                <label class="form-check-label" for="PrefScore-3">
+                  Distant
+                </label>
+              </div>
+              -->
+            </div>
+          </div><!-- /.nested row -->
+        </div>
+        
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              <label>Teleop Charge Station</label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="TeleCharge-input" id="TeleCharge-0" value="0" required>
+                <label class="form-check-label" for="TeleCharge-0">
+                  Did not attempt
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="TeleCharge-input" id="TeleCharge-1" value="2" required>
+                <label class="form-check-label" for="TeleCharge-1">
+                  Docked
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="TeleCharge-input" id="TeleCharge-2" value="3" required>
+                <label class="form-check-label" for="TeleCharge-2">
+                  Engaged
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="TeleCharge-input" id="TeleCharge-3" value="1" required>
+                <label class="form-check-label" for="TeleCharge-3">
+                  Failed
+                </label>
+              </div>
+
+              <label class="form-check-label" for="Parked-input">Parked</label>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="Parked-input">
               </div>
             </div>
-          </div>
-        </div><!-- /.row -->
 
-        <hr>
-
-        <div class="row align-items-center">
-          <div class="col">
-            <a class="btn btn-danger btn-huge form-control" href="javascript:changeValue($('#TargetsHigh-input'),-1)">-1</a>
-          </div>
-          <div class="col">
-            <label for="TargetsHigh-input" class="form-label">High Targets</label>
-            <input type="number" class="form-control" id="TargetsHigh-input" min="0" value="0" required>
-            <div class="invalid-feedback">
-              Please set how many points from the high target.
+            <div class="col">
+              <label class="form-check-label" for="Died-input">Died</label>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="Died-input">
+              </div>
+              
+              <label class="form-check-label" for="Tipped-input">Tipped</label>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="Tipped-input">
+              </div>
+              
+              <label class="form-check-label" for="DefenseOnly-input">Defense Only</label>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="DefenseOnly-input">
+              </div>
+              
+              <label class="form-check-label" for="FeederOnly-input">Feeder Only</label>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="FeederOnly-input">
+              </div>
             </div>
-          </div>
-          <div class="col">
-              <a class="btn btn-success btn-huge form-control" href="javascript:changeValue($('#TargetsHigh-input'),1)">+1</a>
-          </div>
-        </div><!-- /.row -->
+          </div><!-- /.nested row -->
+        </div>
+      </div><!-- /.row -->
 
-        <hr>
+      <hr>
 
-        <div class="row align-items-center">
-          <div class="col">
-            <a class="btn btn-danger btn-huge form-control" href="javascript:changeValue($('#TargetsLow-input'),-1)">-1</a>
-          </div>
-          <div class="col">
-            <label for="TargetsLow-input" class="form-label">Low Targets</label>
-            <input type="number" class="form-control" id="TargetsLow-input" min="0" value="0" required>
-            <div class="invalid-feedback">
-              Please set how many points in the low target.
-            </div>
-          </div>
-          <div class="col">
-              <a class="btn btn-success btn-huge form-control" href="javascript:changeValue($('#TargetsLow-input'),1)">+1</a>
-          </div>
-        </div><!-- /.row -->
+      <!-- Below this line are the autonomous cube / cone scoring options -->
 
-        <hr>
+      <div class="row align-items-center">
+        <div class="col">
+          <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoCubeHigh-input'),-1)">-1</a>
+        </div>
+        <div class="col">
+          <label for="AutoCubeHigh-input" class="form-label">Auto Cube High</label>
+          <input type="number" class="form-control" id="AutoCubeHigh-input" min="0" value="0" required>
+          <div class="invalid-feedback">Please specify how many high cubes were scored.</div>
+        </div>
+        <div class="col">
+            <a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoCubeHigh-input'),1)">+1</a>
+        </div>
 
-        <div class="row">
-          <div class="col">
-            <label class="form-label" for="Comment-input">Comment</label>
-            <textarea class="form-control" id="Comment-input" rows="6"></textarea>
-          </div>
+        <div class="col">
+          <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoConeHigh-input'),-1)">-1</a>
+        </div>
+        <div class="col">
+          <label for="AutoConeHigh-input" class="form-label">Auto Cone High</label>
+          <input type="number" class="form-control" id="AutoConeHigh-input" min="0" value="0" required>
+          <div class="invalid-feedback">Please specify how many high cones were scored.</div>
+        </div>
+        <div class="col">
+            <a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoConeHigh-input'),1)">+1</a>
+        </div>
+      </div><!-- /.row -->
 
-          <div class="col text-center">
-            <a href="javascript:updateQR()" class="btn btn-primary form-control" style="margin-top: 2.5rem;">Get Code</a>
-            <div id="qrcode"></div>
-          </div>
-        </div><!-- /.row -->
 
-      </div><!-- /.container-->
-    </form>
+      <div class="row align-items-center">
+        <div class="col">
+          <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoCubeMed-input'),-1)">-1</a>
+        </div>
+        <div class="col">
+          <label for="AutoCubeMed-input" class="form-label">Auto Cube Med</label>
+          <input type="number" class="form-control" id="AutoCubeMed-input" min="0" value="0" required>
+          <div class="invalid-feedback">Please specify how many medium cubes were scored.</div>
+        </div>
+        <div class="col">
+            <a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoCubeMed-input'),1)">+1</a>
+        </div>
 
-    <script type="text/javascript">
-      function changeValue(ctl,val) {
-        ctl.val( isNaN(parseInt(ctl.val())) ? 1 : parseInt(ctl.val()) + val );
-        if (ctl.val() < 0) {ctl.val("0")}
+        <div class="col">
+          <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoConeMed-input'),-1)">-1</a>
+        </div>
+        <div class="col">
+          <label for="AutoConeMed-input" class="form-label">Auto Cone Med</label>
+          <input type="number" class="form-control" id="AutoConeMed-input" min="0" value="0" required>
+          <div class="invalid-feedback">Please specify how many medium cones were scored.</div>
+        </div>
+        <div class="col">
+            <a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoConeMed-input'),1)">+1</a>
+        </div>
+      </div><!-- /.row -->
+
+
+      <div class="row align-items-center">
+        <div class="col">
+          <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoCubeLow-input'),-1)">-1</a>
+        </div>
+        <div class="col">
+          <label for="AutoCubeLow-input" class="form-label">Auto Cube Low</label>
+          <input type="number" class="form-control" id="AutoCubeLow-input" min="0" value="0" required>
+          <div class="invalid-feedback">Please specify how many low cubes were scored.</div>
+        </div>
+        <div class="col">
+            <a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoCubeLow-input'),1)">+1</a>
+        </div>
+
+        <div class="col">
+          <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoConeLow-input'),-1)">-1</a>
+        </div>
+        <div class="col">
+          <label for="AutoConeLow-input" class="form-label">Auto Cone Low</label>
+          <input type="number" class="form-control" id="AutoConeLow-input" min="0" value="0" required>
+          <div class="invalid-feedback">Please set how many points from the high target.</div>
+        </div>
+        <div class="col">
+            <a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoConeLow-input'),1)">+1</a>
+        </div>
+      </div><!-- /.row -->
+
+
+      <div class="row align-items-center">
+        <div class="col">
+          <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoCubeMiss-input'),-1)">-1</a>
+        </div>
+        <div class="col">
+          <label for="AutoCubeMiss-input" class="form-label">Auto Cube Miss</label>
+          <input type="number" class="form-control" id="AutoCubeMiss-input" min="0" value="0" required>
+          <div class="invalid-feedback">Please specify how many cubes were missed in auto.</div>
+        </div>
+        <div class="col">
+            <a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoCubeMiss-input'),1)">+1</a>
+        </div>
+
+        <div class="col">
+          <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoConeMiss-input'),-1)">-1</a>
+        </div>
+        <div class="col">
+          <label for="AutoConeMiss-input" class="form-label">Auto Cone Miss</label>
+          <input type="number" class="form-control" id="AutoConeMiss-input" min="0" value="0" required>
+          <div class="invalid-feedback">Please specify how many cones were missed in auto.</div>
+        </div>
+        <div class="col">
+            <a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoConeMiss-input'),1)">+1</a>
+        </div>
+      </div><!-- /.row -->
+
+      <hr>
+      <hr>
+      <hr>
+
+      
+      <!-- Below this line are the teleop cube / cone scoring options -->
+
+
+      <div class="row align-items-center">
+        <div class="col">
+          <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleCubeHigh-input'),-1)">-1</a>
+        </div>
+        <div class="col">
+          <label for="TeleCubeHigh-input" class="form-label">Tele Cube High</label>
+          <input type="number" class="form-control" id="TeleCubeHigh-input" min="0" value="0" required>
+          <div class="invalid-feedback">Please specify how many high cubes were scored.</div>
+        </div>
+        <div class="col">
+            <a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleCubeHigh-input'),1)">+1</a>
+        </div>
+
+        <div class="col">
+          <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleConeHigh-input'),-1)">-1</a>
+        </div>
+        <div class="col">
+          <label for="TeleConeHigh-input" class="form-label">Tele Cone High</label>
+          <input type="number" class="form-control" id="TeleConeHigh-input" min="0" value="0" required>
+          <div class="invalid-feedback">Please specify how many high cones were scored.</div>
+        </div>
+        <div class="col">
+            <a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleConeHigh-input'),1)">+1</a>
+        </div>
+      </div><!-- /.row -->
+
+
+      <div class="row align-items-center">
+        <div class="col">
+          <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleCubeMed-input'),-1)">-1</a>
+        </div>
+        <div class="col">
+          <label for="TeleCubeMed-input" class="form-label">Tele Cube Med</label>
+          <input type="number" class="form-control" id="TeleCubeMed-input" min="0" value="0" required>
+          <div class="invalid-feedback">Please specify how many medium cubes were scored.</div>
+        </div>
+        <div class="col">
+            <a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleCubeMed-input'),1)">+1</a>
+        </div>
+
+        <div class="col">
+          <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleConeMed-input'),-1)">-1</a>
+        </div>
+        <div class="col">
+          <label for="TeleConeMed-input" class="form-label">Tele Cone Med</label>
+          <input type="number" class="form-control" id="TeleConeMed-input" min="0" value="0" required>
+          <div class="invalid-feedback">Please specify how many medium cones were scored.</div>
+        </div>
+        <div class="col">
+            <a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleConeMed-input'),1)">+1</a>
+        </div>
+      </div><!-- /.row -->
+
+
+      <div class="row align-items-center">
+        <div class="col">
+          <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleCubeLow-input'),-1)">-1</a>
+        </div>
+        <div class="col">
+          <label for="TeleCubeLow-input" class="form-label">Tele Cube Low</label>
+          <input type="number" class="form-control" id="TeleCubeLow-input" min="0" value="0" required>
+          <div class="invalid-feedback">Please specify how many low cubes were scored.</div>
+        </div>
+        <div class="col">
+            <a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleCubeLow-input'),1)">+1</a>
+        </div>
+
+        <div class="col">
+          <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleConeLow-input'),-1)">-1</a>
+        </div>
+        <div class="col">
+          <label for="TeleConeLow-input" class="form-label">Tele Cone Low</label>
+          <input type="number" class="form-control" id="TeleConeLow-input" min="0" value="0" required>
+          <div class="invalid-feedback">Please set how many points from the high target.</div>
+        </div>
+        <div class="col">
+            <a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleConeLow-input'),1)">+1</a>
+        </div>
+      </div><!-- /.row -->
+
+
+      <div class="row align-items-center">
+        <div class="col">
+          <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleCubeMiss-input'),-1)">-1</a>
+        </div>
+        <div class="col">
+          <label for="TeleCubeMiss-input" class="form-label">Tele Cube Miss</label>
+          <input type="number" class="form-control" id="TeleCubeMiss-input" min="0" value="0" required>
+          <div class="invalid-feedback">Please specify how many cubes were missed in teleop.</div>
+        </div>
+        <div class="col">
+            <a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleCubeMiss-input'),1)">+1</a>
+        </div>
+
+        <div class="col">
+          <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleConeMiss-input'),-1)">-1</a>
+        </div>
+        <div class="col">
+          <label for="TeleConeMiss-input" class="form-label">Tele Cone Miss</label>
+          <input type="number" class="form-control" id="TeleConeMiss-input" min="0" value="0" required>
+          <div class="invalid-feedback">Please specify how many cones were missed in teleop.</div>
+        </div>
+        <div class="col">
+            <a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleConeMiss-input'),1)">+1</a>
+        </div>
+      </div><!-- /.row -->
+
+      <hr>
+
+      <div class="row">
+        <div class="col">
+          <label class="form-label" for="Comment-input">Comment</label>
+          <textarea class="form-control" id="Comment-input" rows="6"></textarea>
+        </div>
+
+        <div class="col text-center">
+          <a href="javascript:updateQR()" class="btn btn-primary form-control" style="margin-top: 2.5rem;">Get Code</a>
+          <div id="qrcode"></div>
+        </div>
+      </div><!-- /.row -->
+
+    </div><!-- /.container-->
+
+    <!-- /.container-->
+  </form>
+
+  <script type="text/javascript">
+    function changeValue(ctl, val) {
+      ctl.val(isNaN(parseInt(ctl.val())) ? 1 : parseInt(ctl.val()) + val);
+      if (ctl.val() < 0) {
+        ctl.val("0");
       }
-      function updateQR() {
-        $('body').addClass('was-validated');
-        $("#qrcode").html(""); // clear the QR div's previous content
-        if ($('#TeamNumber-input:valid').length > 0 && $('#Match-input:valid').length > 0 && $("input[Name='PrefStart-input']:valid").length > 0 && $("input[Name='CycleTime-input']:valid").length > 0 && $("input[Name='PrefScore-input']:valid").length > 0 && $("input[Name='Endgame-input']:valid").length > 0 ) {
-          var data= '{'
-                  + '"TeamNumber":'   + JSON.stringify($("#TeamNumber-input").val())
-                  + ',"TeamName":'    + JSON.stringify($("#TeamName-input").val())
-                  + ',"Match":'       + JSON.stringify($("#Match-input").val())           // TODO: add option for interview data
-                  + ',"PrefStart":'   + JSON.stringify($("input[name='PrefStart-input']:checked").val())
-                  + ',"CycleTime":'   + JSON.stringify($("input[name='CycleTime-input']:checked").val())
-                  + ',"PrefScore":'   + JSON.stringify($("input[name='PrefScore-input']:checked").val())
-                  + ',"CompatAuto":'  + JSON.stringify(Number($("#CompatAuto-input").is(":checked")))
-                  + ',"DriveSkill":'  + JSON.stringify($("#DriveSkill-input").val())
-                  + ',"Aggression":'  + JSON.stringify($("#Aggression-input").val())
-                  + ',"Outlier":'     + JSON.stringify(Number($("#Outlier-input").is(":checked")))
-                  + ',"BreakImpact":' + JSON.stringify(Number($("#BreakImpact-input").is(":checked")))
-                  + ',"DefenseOnly":' + JSON.stringify(Number($("#DefenseOnly-input").is(":checked")))
-                  + ',"TargetsHigh":' + JSON.stringify($("#TargetsHigh-input").val())
-                  + ',"TargetsLow":'  + JSON.stringify($("#TargetsLow-input").val())
-                  + ',"Endgame":'     + JSON.stringify($("input[name='Endgame-input']:checked").val())
-                  + ',"Comment":'     + JSON.stringify($("#Comment-input").val())
-                  + '}';
-          new QRCode(document.getElementById("qrcode"), {text:data,width:480,height:480});
-        }
+    }
+    function updateQR() {
+      $("body").addClass("was-validated");
+      $("#qrcode").html(""); // clear the QR div's previous content
+      // TODO: Add a length check on comment input.  If its too large, don't generate the QR code.
+      if (
+        $("#TeamNumber-input:valid").length > 0 &&
+        $("#Match-input:valid").length > 0 &&
+        $("#Scouter-input:valid").length > 0 &&
+        $("input[Name='AutoCharge-input']:valid").length > 0 &&
+        $("input[Name='TeleCharge-input']:valid").length > 0 
+      ) {
+        var data =
+          "{" +
+          '"key":'      + JSON.stringify(Number($("#TeamNumber-input").val())) +
+          ',"cl":"qm"'  + // TODO: Add a match type picker (Qual=qm, Quarters=qf#m#, Semis=sm#m#, Finals=f1m#)
+          ',"mn":'      + JSON.stringify(Number($("#Match-input").val())) +
+          ',"i":'       + JSON.stringify($("#Scouter-input").val()) +
+          ',"a1":'      + JSON.stringify(Number($("#AutoCubeHigh-input").val())) +
+          ',"a2":'      + JSON.stringify(Number($("#AutoCubeMed-input").val())) +
+          ',"a3":'      + JSON.stringify(Number($("#AutoCubeLow-input").val())) +
+          ',"a4":'      + JSON.stringify(Number($("#AutoCubeMiss-input").val())) +
+          ',"a5":'      + JSON.stringify(Number($("#AutoConeHigh-input").val())) +
+          ',"a6":'      + JSON.stringify(Number($("#AutoConeMed-input").val())) +
+          ',"a7":'      + JSON.stringify(Number($("#AutoConeLow-input").val())) +
+          ',"a8":'      + JSON.stringify(Number($("#AutoConeMiss-input").val())) +
+          ',"a9":'      + JSON.stringify(Number($("input[name='AutoCharge-input']:checked").val())) +
+          ',"m":'       + JSON.stringify(Number($("#Mobility-input").is(":checked"))) +
+          ',"t1":'      + JSON.stringify(Number($("#TeleCubeHigh-input").val())) +
+          ',"t2":'      + JSON.stringify(Number($("#TeleCubeMed-input").val())) +
+          ',"t3":'      + JSON.stringify(Number($("#TeleCubeLow-input").val())) +
+          ',"t4":'      + JSON.stringify(Number($("#TeleCubeMiss-input").val())) +
+          ',"t5":'      + JSON.stringify(Number($("#TeleConeHigh-input").val())) +
+          ',"t6":'      + JSON.stringify(Number($("#TeleConeMed-input").val())) +
+          ',"t7":'      + JSON.stringify(Number($("#TeleConeLow-input").val())) +
+          ',"t8":'      + JSON.stringify(Number($("#TeleConeMiss-input").val())) +
+          ',"t9":'      + JSON.stringify(Number($("input[name='TeleCharge-input']:checked").val())) +
+          ',"p":'       + JSON.stringify(Number($("#Parked-input").is(":checked"))) +
+          ',"ds":'      + JSON.stringify(Number($("input[name='DriveSkill-input']:checked").val())) +
+          ',"pd":'      + JSON.stringify(Number($("input[name='PlayDefense-input']:checked").val())) +
+          ',"hd":'      + JSON.stringify(Number($("input[name='HandleDefense-input']:checked").val())) +
+          ',"ns":'      + JSON.stringify(Number($("#NoShow-input").is(":checked"))) +
+          ',"c":'       + JSON.stringify(Number($("input[name='Card-input']:checked").val())) +
+          ',"d":'       + JSON.stringify(Number($("#Died-input").is(":checked"))) +
+          ',"t":'       + JSON.stringify(Number($("#Tipped-input").is(":checked"))) +
+          ',"do":'      + JSON.stringify(Number($("#DefenseOnly-input").is(":checked"))) +
+          ',"fo":'      + JSON.stringify(Number($("#FeederOnly-input").is(":checked"))) +
+          ',"co":'       + JSON.stringify($("#Comment-input").val()) +
+          "}";
+        new QRCode( document.getElementById("qrcode"), { text: data, width: 480, height: 480, });
       }
-    </script>
-  </body>
+    }
+  </script>
+</body>
+
 </html>
