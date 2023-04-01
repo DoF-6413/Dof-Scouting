@@ -35,6 +35,17 @@
       display: inline-block !important;
       margin: 2rem 0rem;
     }
+	
+	/* Adding color highlights to the cube and cone input fields as subtle hint to scouts who may need it. */
+	
+	.cube {
+	  color: rgb(255,255,255);
+	  background-color: rgb(128,0,128)
+	}
+	
+	.cone {
+	  background-color: rgb(255,165,0)
+	}
   </style>
   <!-- <script>
     if ("serviceWorker" in navigator) {
@@ -136,7 +147,7 @@
                 <label class="form-check-label" for="DriveSkill-1">Below Avg.</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="DriveSkill-input" id="DriveSkill-2" value="2" required checked>
+                <input class="form-check-input" type="radio" name="DriveSkill-input" id="DriveSkill-2" value="2" required>
                 <label class="form-check-label" for="DriveSkill-2">Average</label>
               </div>
               <div class="form-check">
@@ -156,7 +167,7 @@
             -->
               <label for="PlayDefense-input" class="form-label">Plays Defense</label>
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="PlayDefense-input" id="PlayDefense-0" value="0" required checked>
+                <input class="form-check-input" type="radio" name="PlayDefense-input" id="PlayDefense-0" value="0" required>
                 <label class="form-check-label" for="PlayDefense-0">Not shown</label>
               </div>
               <div class="form-check">
@@ -184,7 +195,7 @@
             -->
               <label for="HandleDefense-input" class="form-label">Handle Defense</label>
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="HandleDefense-input" id="HandleDefense-0" value="0" required checked>
+                <input class="form-check-input" type="radio" name="HandleDefense-input" id="HandleDefense-0" value="0" required>
                 <label class="form-check-label" for="HandleDefense-0">Not shown</label>
               </div>
               <div class="form-check">
@@ -288,7 +299,7 @@
             </div>
 
             <div class="col">
-              <label class="form-check-label" for="Died-input">Died</label>
+              <label class="form-check-label" for="Died-input">Died / Disable (Comments!)</label>
               <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" role="switch" id="Died-input">
               </div>
@@ -298,15 +309,16 @@
                 <input class="form-check-input" type="checkbox" role="switch" id="Tipped-input">
               </div>
               
-              <label class="form-check-label" for="DefenseOnly-input">Defense Only</label>
+              <label class="form-check-label" for="DefenseOnly-input">Defense / Pusher</label>
               <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" role="switch" id="DefenseOnly-input">
               </div>
-              
+              <!-- UI change on 36-Mar-2023 to remove Feeder only input since we combined that with Defense / Pusher
               <label class="form-check-label" for="FeederOnly-input">Feeder Only</label>
               <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" role="switch" id="FeederOnly-input">
               </div>
+			  -->
             </div>
           </div><!-- /.nested row -->
         </div>
@@ -320,10 +332,10 @@
         <div class="col">
           <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoCubeHigh-input'),-1)">-1</a>
         </div>
-        <div class="col">
+        <div class="col cube text-center">
           <label for="AutoCubeHigh-input" class="form-label">Auto Cube High</label>
-          <input type="number" class="form-control" id="AutoCubeHigh-input" min="0" value="0" required>
-          <div class="invalid-feedback">Please specify how many high cubes were scored.</div>
+          <input type="number" class="form-control text-center" id="AutoCubeHigh-input" min="0" value="0" required>
+          <div class="invalid-feedback">Please specify how many high cubes were scored in auto.</div>
         </div>
         <div class="col">
             <a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoCubeHigh-input'),1)">+1</a>
@@ -332,10 +344,10 @@
         <div class="col">
           <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoConeHigh-input'),-1)">-1</a>
         </div>
-        <div class="col">
+        <div class="col cone text-center">
           <label for="AutoConeHigh-input" class="form-label">Auto Cone High</label>
-          <input type="number" class="form-control" id="AutoConeHigh-input" min="0" value="0" required>
-          <div class="invalid-feedback">Please specify how many high cones were scored.</div>
+          <input type="number" class="form-control text-center" id="AutoConeHigh-input" min="0" value="0" required>
+          <div class="invalid-feedback">Please specify how many high cones were scored in auto.</div>
         </div>
         <div class="col">
             <a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoConeHigh-input'),1)">+1</a>
@@ -347,10 +359,10 @@
         <div class="col">
           <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoCubeMed-input'),-1)">-1</a>
         </div>
-        <div class="col">
-          <label for="AutoCubeMed-input" class="form-label">Auto Cube Med</label>
-          <input type="number" class="form-control" id="AutoCubeMed-input" min="0" value="0" required>
-          <div class="invalid-feedback">Please specify how many medium cubes were scored.</div>
+        <div class="col cube text-center">
+          <label for="AutoCubeMed-input" class="form-label">Auto Cube Mid</label>
+          <input type="number" class="form-control text-center" id="AutoCubeMed-input" min="0" value="0" required>
+          <div class="invalid-feedback">Please specify how many middle cubes were scored in auto.</div>
         </div>
         <div class="col">
             <a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoCubeMed-input'),1)">+1</a>
@@ -359,10 +371,10 @@
         <div class="col">
           <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoConeMed-input'),-1)">-1</a>
         </div>
-        <div class="col">
-          <label for="AutoConeMed-input" class="form-label">Auto Cone Med</label>
-          <input type="number" class="form-control" id="AutoConeMed-input" min="0" value="0" required>
-          <div class="invalid-feedback">Please specify how many medium cones were scored.</div>
+        <div class="col cone text-center">
+          <label for="AutoConeMed-input" class="form-label">Auto Cone Mid</label>
+          <input type="number" class="form-control text-center" id="AutoConeMed-input" min="0" value="0" required>
+          <div class="invalid-feedback">Please specify how many middle cones were scored in auto.</div>
         </div>
         <div class="col">
             <a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoConeMed-input'),1)">+1</a>
@@ -374,10 +386,10 @@
         <div class="col">
           <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoCubeLow-input'),-1)">-1</a>
         </div>
-        <div class="col">
+        <div class="col cube text-center">
           <label for="AutoCubeLow-input" class="form-label">Auto Cube Low</label>
-          <input type="number" class="form-control" id="AutoCubeLow-input" min="0" value="0" required>
-          <div class="invalid-feedback">Please specify how many low cubes were scored.</div>
+          <input type="number" class="form-control text-center" id="AutoCubeLow-input" min="0" value="0" required>
+          <div class="invalid-feedback">Please specify how many low cubes were scored in auto.</div>
         </div>
         <div class="col">
             <a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoCubeLow-input'),1)">+1</a>
@@ -386,10 +398,10 @@
         <div class="col">
           <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoConeLow-input'),-1)">-1</a>
         </div>
-        <div class="col">
+        <div class="col cone text-center">
           <label for="AutoConeLow-input" class="form-label">Auto Cone Low</label>
-          <input type="number" class="form-control" id="AutoConeLow-input" min="0" value="0" required>
-          <div class="invalid-feedback">Please set how many points from the high target.</div>
+          <input type="number" class="form-control text-center" id="AutoConeLow-input" min="0" value="0" required>
+          <div class="invalid-feedback">Please set how many low cones were scored in auto.</div>
         </div>
         <div class="col">
             <a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoConeLow-input'),1)">+1</a>
@@ -401,9 +413,9 @@
         <div class="col">
           <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoCubeMiss-input'),-1)">-1</a>
         </div>
-        <div class="col">
+        <div class="col cube text-center">
           <label for="AutoCubeMiss-input" class="form-label">Auto Cube Miss</label>
-          <input type="number" class="form-control" id="AutoCubeMiss-input" min="0" value="0" required>
+          <input type="number" class="form-control text-center" id="AutoCubeMiss-input" min="0" value="0" required>
           <div class="invalid-feedback">Please specify how many cubes were missed in auto.</div>
         </div>
         <div class="col">
@@ -413,9 +425,9 @@
         <div class="col">
           <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoConeMiss-input'),-1)">-1</a>
         </div>
-        <div class="col">
+        <div class="col cone text-center">
           <label for="AutoConeMiss-input" class="form-label">Auto Cone Miss</label>
-          <input type="number" class="form-control" id="AutoConeMiss-input" min="0" value="0" required>
+          <input type="number" class="form-control text-center" id="AutoConeMiss-input" min="0" value="0" required>
           <div class="invalid-feedback">Please specify how many cones were missed in auto.</div>
         </div>
         <div class="col">
@@ -435,10 +447,10 @@
         <div class="col">
           <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleCubeHigh-input'),-1)">-1</a>
         </div>
-        <div class="col">
+        <div class="col cube text-center">
           <label for="TeleCubeHigh-input" class="form-label">Tele Cube High</label>
-          <input type="number" class="form-control" id="TeleCubeHigh-input" min="0" value="0" required>
-          <div class="invalid-feedback">Please specify how many high cubes were scored.</div>
+          <input type="number" class="form-control text-center" id="TeleCubeHigh-input" min="0" value="0" required>
+          <div class="invalid-feedback">Please specify how many high cubes were scored in teleop.</div>
         </div>
         <div class="col">
             <a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleCubeHigh-input'),1)">+1</a>
@@ -447,10 +459,10 @@
         <div class="col">
           <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleConeHigh-input'),-1)">-1</a>
         </div>
-        <div class="col">
+        <div class="col cone text-center">
           <label for="TeleConeHigh-input" class="form-label">Tele Cone High</label>
-          <input type="number" class="form-control" id="TeleConeHigh-input" min="0" value="0" required>
-          <div class="invalid-feedback">Please specify how many high cones were scored.</div>
+          <input type="number" class="form-control text-center" id="TeleConeHigh-input text-center" min="0" value="0" required>
+          <div class="invalid-feedback">Please specify how many high cones were scored in teleop.</div>
         </div>
         <div class="col">
             <a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleConeHigh-input'),1)">+1</a>
@@ -462,10 +474,10 @@
         <div class="col">
           <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleCubeMed-input'),-1)">-1</a>
         </div>
-        <div class="col">
-          <label for="TeleCubeMed-input" class="form-label">Tele Cube Med</label>
-          <input type="number" class="form-control" id="TeleCubeMed-input" min="0" value="0" required>
-          <div class="invalid-feedback">Please specify how many medium cubes were scored.</div>
+        <div class="col cube text-center">
+          <label for="TeleCubeMed-input" class="form-label">Tele Cube Mid</label>
+          <input type="number" class="form-control text-center" id="TeleCubeMed-input" min="0" value="0" required>
+          <div class="invalid-feedback">Please specify how many middle cubes were scored in teleop.</div>
         </div>
         <div class="col">
             <a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleCubeMed-input'),1)">+1</a>
@@ -474,10 +486,10 @@
         <div class="col">
           <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleConeMed-input'),-1)">-1</a>
         </div>
-        <div class="col">
-          <label for="TeleConeMed-input" class="form-label">Tele Cone Med</label>
-          <input type="number" class="form-control" id="TeleConeMed-input" min="0" value="0" required>
-          <div class="invalid-feedback">Please specify how many medium cones were scored.</div>
+        <div class="col cone text-center">
+          <label for="TeleConeMed-input" class="form-label">Tele Cone Mid</label>
+          <input type="number" class="form-control text-center" id="TeleConeMed-input" min="0" value="0" required>
+          <div class="invalid-feedback">Please specify how many middle cones were scored in teleop.</div>
         </div>
         <div class="col">
             <a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleConeMed-input'),1)">+1</a>
@@ -489,10 +501,10 @@
         <div class="col">
           <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleCubeLow-input'),-1)">-1</a>
         </div>
-        <div class="col">
+        <div class="col cube text-center">
           <label for="TeleCubeLow-input" class="form-label">Tele Cube Low</label>
-          <input type="number" class="form-control" id="TeleCubeLow-input" min="0" value="0" required>
-          <div class="invalid-feedback">Please specify how many low cubes were scored.</div>
+          <input type="number" class="form-control text-center" id="TeleCubeLow-input" min="0" value="0" required>
+          <div class="invalid-feedback">Please specify how many low cubes were scored in teleop.</div>
         </div>
         <div class="col">
             <a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleCubeLow-input'),1)">+1</a>
@@ -501,10 +513,10 @@
         <div class="col">
           <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleConeLow-input'),-1)">-1</a>
         </div>
-        <div class="col">
+        <div class="col cone text-center">
           <label for="TeleConeLow-input" class="form-label">Tele Cone Low</label>
-          <input type="number" class="form-control" id="TeleConeLow-input" min="0" value="0" required>
-          <div class="invalid-feedback">Please set how many points from the high target.</div>
+          <input type="number" class="form-control text-center" id="TeleConeLow-input" min="0" value="0" required>
+          <div class="invalid-feedback">Please specify how many low cones were scored in teleop.</div>
         </div>
         <div class="col">
             <a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleConeLow-input'),1)">+1</a>
@@ -516,9 +528,9 @@
         <div class="col">
           <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleCubeMiss-input'),-1)">-1</a>
         </div>
-        <div class="col">
+        <div class="col cube text-center">
           <label for="TeleCubeMiss-input" class="form-label">Tele Cube Miss</label>
-          <input type="number" class="form-control" id="TeleCubeMiss-input" min="0" value="0" required>
+          <input type="number" class="form-control text-center" id="TeleCubeMiss-input" min="0" value="0" required>
           <div class="invalid-feedback">Please specify how many cubes were missed in teleop.</div>
         </div>
         <div class="col">
@@ -528,9 +540,9 @@
         <div class="col">
           <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleConeMiss-input'),-1)">-1</a>
         </div>
-        <div class="col">
+        <div class="col cone text-center">
           <label for="TeleConeMiss-input" class="form-label">Tele Cone Miss</label>
-          <input type="number" class="form-control" id="TeleConeMiss-input" min="0" value="0" required>
+          <input type="number" class="form-control text-center" id="TeleConeMiss-input" min="0" value="0" required>
           <div class="invalid-feedback">Please specify how many cones were missed in teleop.</div>
         </div>
         <div class="col">
@@ -573,6 +585,9 @@
         $("#Match-input:valid").length > 0 &&
         $("#Scouter-input:valid").length > 0 &&
         $("input[Name='AutoCharge-input']:valid").length > 0 &&
+        $("input[Name='DriveSkill-input']:valid").length > 0 &&
+        $("input[Name='PlayDefense-input']:valid").length > 0 &&
+        $("input[Name='HandleDefense-input']:valid").length > 0 &&
         $("input[Name='TeleCharge-input']:valid").length > 0 
       ) {
         var data =
@@ -609,7 +624,7 @@
           ',"d":'       + JSON.stringify(Number($("#Died-input").is(":checked"))) +
           ',"t":'       + JSON.stringify(Number($("#Tipped-input").is(":checked"))) +
           ',"do":'      + JSON.stringify(Number($("#DefenseOnly-input").is(":checked"))) +
-          ',"fo":'      + JSON.stringify(Number($("#FeederOnly-input").is(":checked"))) +
+          // Removed Feeder Only input after AZ West per team discussion ',"fo":'      + JSON.stringify(Number($("#FeederOnly-input").is(":checked"))) +
           ',"co":'       + JSON.stringify($("#Comment-input").val()) +
           "}";
         new QRCode( document.getElementById("qrcode"), { text: data, width: 480, height: 480, });
