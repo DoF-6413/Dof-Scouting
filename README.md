@@ -58,7 +58,7 @@ If you want to change the year so you can have a 2023, 2024, etc config then you
 <!-- CONTACT -->
 ## Contact
 
-Degrees of Freedom - [@your_twitter](https://twitter.com/your_username) - dof6413@gmail.com
+Degrees of Freedom - [@dof6413](https://twitter.com/dof6413) - [Instagram](https://www.instagram.com/dof6413) - [Facebook](https://www.facebook.com/dof6413) - [YouTube](https://www.youtube.com/channel/UCoJrt-wiXr132q2F-QRBeTw) - dof6413@gmail.com
 
 Project Link: [https://github.com/DoF-6413/Dof-Scouting](https://github.com/DoF-6413/Dof-Scouting)
 
