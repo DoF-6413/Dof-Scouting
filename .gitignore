@@ -1,6 +1,7 @@
 # EMACS backup and work files
 *~
 \#*\#
+.#*
 
 # Python virtual environment files
 .venv
