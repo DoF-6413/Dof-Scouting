@@ -1,5 +1,5 @@
 teamNumber: The numeric team value (e.g. 6413)
-compLevel: The match level ("q"=Qualifiers, "qf"=Quarters, "sf"=Semis, "f"=Finals)
+compLevel: The match level ("qm"=Qualifiers, "qf"=Quarters, "sf"=Semis, "f"=Finals)
 matchNum: The match number (e.g 1)
 initials: The scouters initials/name
 autoMove: Did they leave during Auto (0=No, 1=Yes)
@@ -14,7 +14,7 @@ teleSpeakerClose: Number of notes scored in the Speaker up close during teleop
 teleSpeakerNotClose: Number of notes scored in the Speaker beyond the Leave line during telop
 teleSpeakerMiss: Number of notes they failed to score in the Speaker during teleop
 telePark: Did they park on the Stage (0=No, 1=Yes)
-teleClimb: Did they climb a chain (0=No, 1=Yes OR 0=No, 1=Solo, 2=Double, 3=Triple ###)
+teleClimb: Did they climb a chain (0=Not Attempted, 1=Failed, 2=Solo, 3=Double, 4=Triple)
 teleTrap: Number of notes scored in the Trap
 teleTrapMiss: Number of notes they failed to score in the Trap
 teleMic: Number of high notes scored on the Microphone
