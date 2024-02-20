@@ -16,7 +16,7 @@ var authKey = "uTHeEfPigDp9huQCpLNkWK7FBQIb01Qrzvt4MAjh9z2WQDkrsvNE77ch6bOPvPb6"
 /**
 * Get list of teams at the event
 *
-* @param {eventCode} eventCode the TBA event code (i.e. 2023azva) to pull the team list for
+* @param {eventCode} - The TBA event code (i.e. 2024azva) to pull the team list for
 */
 function getTeams( eventCode ) {
 	// Request the team list if we have an API key.
@@ -42,7 +42,7 @@ function getTeams( eventCode ) {
 /**
 * Get schedule for the specified event
 *
-* @param {eventCode} eventCode the TBA event code (i.e. 2020azva) to pull the schedule for
+* @param {eventCode} - The TBA event code (i.e. 2024azva) to pull the schedule for
 */
 function getSchedule( eventCode ) {
 	// Request the team list if we have an API key.

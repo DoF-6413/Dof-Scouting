@@ -3,7 +3,7 @@
 // The "guts" of the Scounting application
 // Original credit to Team 2451 - PWNAGE
 //
-// This version has been modified to suit Team 6513's needs with all the extra stuff removed
+// This version has been modified to suit Team 6413's needs with all the extra stuff removed
 //
 // Key to the field names that need to be in the DOM for the scripts to work properly:
 // input_e = TBA Event code
@@ -54,39 +54,38 @@ function configure() {
 function clearScoutingFields() {
 	// Time to zap all data inputs to be our defaults.  Lets just
 	// do it top to bottom, left to right...
-	clearRadioList( "AutoCharge-input" );
-
-	document.getElementById( "Mobility-input" ).checked = false;
+	document.getElementById( "Leave-input" ).checked = false;
 
 	document.getElementById( "NoShow-input" ).checked = false;
 
-	document.getElementById( "AutoCubeHigh-input" ).value = "0";
-	document.getElementById( "AutoCubeMid-input" ).value = "0";
-	document.getElementById( "AutoCubeLow-input" ).value = "0";
-	document.getElementById( "AutoCubeMiss-input" ).value = "0";
+	document.getElementById( "AutoSpeakerNear-input" ).value = "0";
+	document.getElementById( "AutoSpeakerNotNear-input" ).value = "0";
+	document.getElementById( "AutoSpeakerMiss-input" ).value = "0";
 
-	document.getElementById( "AutoConeHigh-input" ).value = "0";
-	document.getElementById( "AutoConeMid-input" ).value = "0";
-	document.getElementById( "AutoConeLow-input" ).value = "0";
-	document.getElementById( "AutoConeMiss-input" ).value = "0";
+	document.getElementById( "AutoAmp-input" ).value = "0";
+	document.getElementById( "AutoAmpMiss-input" ).value = "0";
 
-	document.getElementById( "TeleCubeHigh-input" ).value = "0";
-	document.getElementById( "TeleCubeMid-input" ).value = "0";
-	document.getElementById( "TeleCubeLow-input" ).value = "0";
-	document.getElementById( "TeleCubeMiss-input" ).value = "0";
+	document.getElementById( "TeleSpeakerNear-input" ).value = "0";
+	document.getElementById( "TeleSpeakerNotNear-input" ).value = "0";
+	document.getElementById( "TeleSpeakerMiss-input" ).value = "0";
 
-	document.getElementById( "TeleConeHigh-input" ).value = "0";
-	document.getElementById( "TeleConeMid-input" ).value = "0";
-	document.getElementById( "TeleConeLow-input" ).value = "0";
-	document.getElementById( "TeleConeMiss-input" ).value = "0";
+	document.getElementById( "TeleAmp-input" ).value = "0";
+	document.getElementById( "TeleAmpMiss-input" ).value = "0";
 
-	document.getElementById( "TeleCharge-0" ).checked = false;
-	document.getElementById( "TeleCharge-1" ).checked = false;
-	document.getElementById( "TeleCharge-2" ).checked = false;
-	document.getElementById( "TeleCharge-3" ).checked = false;
+	document.getElementById( "TeleClimb-0" ).checked = true;
+	document.getElementById( "TeleClimb-1" ).checked = false;
+	document.getElementById( "TeleClimb-2" ).checked = false;
+	document.getElementById( "TeleClimb-3" ).checked = false;
+	document.getElementById( "TeleClimb-4" ).checked = false;
 
-	// Clear the Teleop charge station input
-	clearRadioList( "TeleCharge-input" );
+	// Clear the Climb input
+	clearRadioList( "TeleClimb-input" );
+
+	document.getElementById( "Trap-input" ).value = "0";
+	document.getElementById( "TrapMiss-input" ).value = "0";
+
+	document.getElementById( "Mic-input" ).value = "0";
+	document.getElementById( "MicMiss-input" ).value = "0";
 
 	document.getElementById( "Parked-input" ).checked = false;
 
@@ -96,16 +95,11 @@ function clearScoutingFields() {
 	// Clear the Plays Defense input
 	clearRadioList( "PlayDefense-input" );
 
-	// Clear the Handle Defense input
-	clearRadioList( "HandleDefense-input" );
-
 	document.getElementById( "Card-0" ).checked = true;
 	document.getElementById( "Card-1" ).checked = false;
 	document.getElementById( "Card-2" ).checked = false;
 
 	document.getElementById( "Died-input" ).checked = false;
-
-	document.getElementById( "Tipped-input" ).checked = false;
 
 	document.getElementById( "DefenseOnly-input" ).checked = false;
 
@@ -307,7 +301,7 @@ function getCurrentMatchKey() {
 	// The original line below does NOT work for ANY match level besides Qualifiers!
 	// The scripts do NOT properly construct the match code for Semifinals AND Finals.  
 	// The match code for Semifinals is <eventCode>_sf<#>m1, not <eventCode>_sf<#>
-	// The match code fo */r Finals is <eventCode>_f1m<#>, not <eventCode>_f<#>
+	// The match code for Finals is <eventCode>_f1m<#>, not <eventCode>_f<#>
 	// return document.getElementById( "input_e" ).value + "_" + getLevel() + document.getElementById( "input_m" ).value;
 
 	// Here is my version that does work for all match levels.  The match key conforms to TBAs current standard
@@ -351,7 +345,7 @@ function updateMatchStart( event ) {
 		return;
 		}
 
-	// Was the change to one of the robot selections ( e.g. Red1 or Blue3)?  If so, update the robot info in the DOM
+	// Was the change to one of the robot selections (e.g. Red1 or Blue3)?  If so, update the robot info in the DOM
 	if ( event.target.id.startsWith( "input_r" ) ) {
 		document.getElementById( "input_t" ).value = getCurrentTeamNumberFromRobot().replace( "frc", "" );
 		onTeamnameChange();
@@ -408,19 +402,16 @@ function updateNoShow( event ) {
 		// Zap all the scouting fields then set some defaults for a true No Show robot
 		clearScoutingFields()
 
-		// Auto charge station should be "Not Attempted"
-		document.getElementById( "AutoCharge-0" ).checked = true;
-
 		// Restore the No Show checkbox 
 		document.getElementById( "NoShow-input" ).checked = true;
 
-		// Tele charge station should be "Not Attempted"
-		document.getElementById( "TeleCharge-0" ).checked = true;
+		// Climb should be "Not Attempted"
+		document.getElementById( "TeleClimb-0" ).checked = true;
 
 		// All end game check lists should all be "Not Attempted" / "Not shown"
-		document.getElementById( "DriveSkill-0" ).checked = true;
-		document.getElementById( "PlayDefense-0" ).checked = true;
-		document.getElementById( "HandleDefense-0" ).checked = true;
+        // EXCEPT Driver Skill.  That we default to "Average".
+		document.getElementById( "Card-0" ).checked = true;
+		document.getElementById( "DriveSkill-2" ).checked = true;
 		}
 }
 
@@ -444,13 +435,12 @@ function onTeamnameChange( event ) {
 	}
 
 
-
-
 /**
 * When the page loads, load in our configuration and then load the team and schedule data
 * for the event in the configuration.
 */
 window.onload = function () {
+    // Load the event configuration data and inject some of it into the DOM for use below
 	var ret = configure();
 
 	// If we could load and parse the configuration then lets try to get data from TBA for the event
