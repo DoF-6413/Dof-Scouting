@@ -58,15 +58,15 @@ function clearScoutingFields() {
 
 	document.getElementById( "NoShow-input" ).checked = false;
 
-	document.getElementById( "AutoSpeakerNear-input" ).value = "0";
-	document.getElementById( "AutoSpeakerNotNear-input" ).value = "0";
+	document.getElementById( "NotNear-input" ).checked = false;
+
+	document.getElementById( "AutoSpeaker-input" ).value = "0";
 	document.getElementById( "AutoSpeakerMiss-input" ).value = "0";
 
 	document.getElementById( "AutoAmp-input" ).value = "0";
 	document.getElementById( "AutoAmpMiss-input" ).value = "0";
 
-	document.getElementById( "TeleSpeakerNear-input" ).value = "0";
-	document.getElementById( "TeleSpeakerNotNear-input" ).value = "0";
+	document.getElementById( "TeleSpeaker-input" ).value = "0";
 	document.getElementById( "TeleSpeakerMiss-input" ).value = "0";
 
 	document.getElementById( "TeleAmp-input" ).value = "0";
@@ -125,7 +125,7 @@ function resetFormForNextMatch() {
 	// do that ourselves.
 	$('body').removeClass( 'was-validated' );
 
-	// Erase the team name happy text that is no longer validateRobot
+	// Erase the team name happy text that is no longer validate
 	document.getElementById( "teamname-label" ).innerHTML = "";
 
 	// Update the match and team numbers for the next match

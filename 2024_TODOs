@@ -3,23 +3,24 @@ Update Python script:
        t (Tipped) - REMOVE
        pd (PlayDefense) - REMOVE
        hd (HandleDefense) - REMOVE
-       a1 (AutoCubeHigh-input) -> a1 (AutoSpeakerNear)
-       a2 (AutoCubeMid-input) -> a2 (AutoSpeakerNotNear)
-       a3 (AutoCubeLow-input) -> a3 (AutoSpeakerMiss)
-       a4 (AutoConeHigh-input) -> a4 (AutoAmp)
-       a5 (AutoConeLow-input) -> a5 (AutoAmpMiss)
+       a1 (AutoCubeHigh-input) -> a1 (AutoSpeaker)
+       a2 (AutoCubeMid-input) -> a2 (AutoSpeakerMiss)
+       a3 (AutoCubeLow-input) -> a3 (AutoAmp)
+       a4 (AutoConeHigh-input) -> a4 (AutoAmpMiss)
+       a5 (AutoConeLow-input) -> REMOVE
        a6 (AutoConeMid-input) - REMOVE 
        a7 (AutoConeLow-input) - REMOVE
        a8 (AutoConeMiss-input) - REMOVE
        a9 (AutoCharge-input) - REMOVE
-       t1 (TeleCubeHigh-input) - t1 (TeleSpeakerNear)
-       t2 (TeleCubeMid-input) - t2 (TeleSpeakerNotNear)
-       t3 (TeleCubeLow-input) - t3 (TeleSpeakerMiss)
-       t4 (TeleConeHigh-input) - t4 (TeleAmp)
-       t5 (TeleConeLow-input) - t5 (TeleAmpMiss)
-       t6 (TeleCharge-input) - t6 (TeleClimb)
-       t7 (TeleCubeMiss-input) - t7 (Trap)
-       t8 (TeleConeMiss-input) - t8 (TrapMiss)
+       t1 (TeleCubeHigh-input) - t1 (TeleSpeaker)
+       t2 (TeleCubeMid-input) - t2 (TeleSpeakerMiss)
+       t3 (TeleCubeLow-input) - t3 (TeleAmp)
+       t4 (TeleConeHigh-input) - t4 (TeleAmpMiss)
+       t5 (TeleConeLow-input) - t5 (TeleClimb)
+       t6 (TeleCharge-input) - t6 (Trap)
+       t7 (TeleCubeMiss-input) - t7 (TrapMiss)
+       t8 (TeleConeMiss-input) - REMOVE
        t9 (TeleConeMid-input) - REMOVE
        -- - m (Mic)
        -- - mm (MicMiss)
+       -- - nn (NotNear)
