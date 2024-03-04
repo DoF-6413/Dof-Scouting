@@ -1,7 +1,7 @@
 Update Python script:
        m (Mobility) -> l (Leave)
        t (Tipped) - REMOVE
-       pd (PlayDefense) - REMOVE (??)
+       pd (PlayDefense) - REMOVE
        hd (HandleDefense) - REMOVE
        a1 (AutoCubeHigh-input) -> a1 (AutoSpeakerNear)
        a2 (AutoCubeMid-input) -> a2 (AutoSpeakerNotNear)
