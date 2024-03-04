@@ -72,7 +72,7 @@ function clearScoutingFields() {
 	document.getElementById( "TeleAmp-input" ).value = "0";
 	document.getElementById( "TeleAmpMiss-input" ).value = "0";
 
-	document.getElementById( "TeleClimb-0" ).checked = true;
+	document.getElementById( "TeleClimb-0" ).checked = false;
 	document.getElementById( "TeleClimb-1" ).checked = false;
 	document.getElementById( "TeleClimb-2" ).checked = false;
 	document.getElementById( "TeleClimb-3" ).checked = false;
@@ -409,9 +409,11 @@ function updateNoShow( event ) {
 		document.getElementById( "TeleClimb-0" ).checked = true;
 
 		// All end game check lists should all be "Not Attempted" / "Not shown"
-        // EXCEPT Driver Skill.  That we default to "Average".
 		document.getElementById( "Card-0" ).checked = true;
-		document.getElementById( "DriveSkill-2" ).checked = true;
+		document.getElementById( "DriveSkill-0" ).checked = true;
+
+        // Set automatic "NO SHOW" comment!
+        document.getElementById( "Comment-input" ).value = "NO SHOW";
 		}
 }
 
