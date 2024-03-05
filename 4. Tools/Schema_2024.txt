@@ -2,19 +2,15 @@ teamNumber: The numeric team value (e.g. 6413)
 compLevel: The match level ("qm"=Qualifiers, "qf"=Quarters, "sf"=Semis, "f"=Finals)
 matchNum: The match number (e.g 1)
 initials: The scouters initials/name
-autoMove: Did they leave during Auto (0=No, 1=Yes)
+leave: Did they leave during Auto (0=No, 1=Yes)
 autoAmp: Number of notes scored in the Amp during autonomous
-autoAmpMiss: Number of notes they failed to score in the Amp during autonomous
-autoSpeakerClose: Number of notes scored in the Speaker up close during autonomous
-autoSpeakerNotClose: Number of notes scored in the Speaker beyond the Leave line during autonomous
+autoSpeaker: Number of notes scored in the Speaker up close during autonomous
 autoSpeakerMiss: Number of notes they failed to score in the Speaker during autonomous
 teleAmp: Number of notes scored in the Amp during teleop
-teleAmpMiss: Number of notes they failed to score in the Amp during teleop
-teleSpeakerClose: Number of notes scored in the Speaker up close during teleop
-teleSpeakerNotClose: Number of notes scored in the Speaker beyond the Leave line during telop
+teleSpeaker: Number of notes scored in the Speaker up close during teleop
 teleSpeakerMiss: Number of notes they failed to score in the Speaker during teleop
-telePark: Did they park on the Stage (0=No, 1=Yes)
-teleClimb: Did they climb a chain (0=Not Attempted, 1=Failed, 2=Solo, 3=Double, 4=Triple)
+park: Did they park on the Stage (0=No, 1=Yes)
+climb: Did they climb a chain (0=Not Attempted, 1=Failed, 2=Solo, 3=Double, 4=Triple)
 teleTrap: Number of notes scored in the Trap
 teleTrapMiss: Number of notes they failed to score in the Trap
 teleMic: Number of high notes scored on the Microphone
@@ -22,7 +18,9 @@ teleMicMiss: Number of high notes they failed to score on the Microphone
 card: What card they received during the match (0=None, 1=Yellow, 2=Red)
 noShow: The robot was a "No Show" for the match (0=No, 1=Yes)
 died: The robot stopped/died during the match (0=No, 1=Yes)
-tipped: The robot tipped over during the match (0=No, 1=Yes)
-playDefense: The robot played only defense during the match (0=No, 1=Yes)
-driverSkill: The level of skill the driver demonstrated (0=Not show, 1=Below Average, 2=Average, 3=Above Average, 4=Exceptional)
+playDefense: The robot played ONLY defense during the match (0=No, 1=Yes)
 comments: Scouter comments
+tipped: REMOVED 2024
+autoAmpMiss: REMOVED 4-Mar-2024
+teleAmpMiss: REMOVED 4-Mar-2024
+driverSkill: REMOVED 4-Mar-2024
