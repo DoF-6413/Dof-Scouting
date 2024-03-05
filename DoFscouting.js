@@ -58,8 +58,6 @@ function clearScoutingFields() {
 
 	document.getElementById( "NoShow-input" ).checked = false;
 
-	document.getElementById( "NotNear-input" ).checked = false;
-
 	document.getElementById( "AutoSpeaker-input" ).value = "0";
 	document.getElementById( "AutoSpeakerMiss-input" ).value = "0";
 
@@ -88,9 +86,6 @@ function clearScoutingFields() {
 	document.getElementById( "MicMiss-input" ).value = "0";
 
 	document.getElementById( "Parked-input" ).checked = false;
-
-	// Clear the Driver Skill input
-	clearRadioList( "DriveSkill-input" );
 
 	// Clear the Plays Defense input
 	clearRadioList( "PlayDefense-input" );
@@ -410,7 +405,6 @@ function updateNoShow( event ) {
 
 		// All end game check lists should all be "Not Attempted" / "Not shown"
 		document.getElementById( "Card-0" ).checked = true;
-		document.getElementById( "DriveSkill-0" ).checked = true;
 
         // Set automatic "NO SHOW" comment!
         document.getElementById( "Comment-input" ).value = "NO SHOW";

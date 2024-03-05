@@ -174,16 +174,7 @@
 						</div>
 					</div>
 
-					
-					<!-- The NotNear Shoot checkbox -->
-					<div class="col">
-						<label class="form-check-label" for="NotNear-input">Scores from past Leave Line</label>
-						<div class="form-check form-switch">
-							<input class="form-check-input" type="checkbox" role="switch" id="NotNear-input">
-						</div>
-					</div>
-					
-
+				
 					<!-- The NoShow checkbox -->
 					<div class="col" onchange="updateNoShow(event)">
 						<label class="form-check-label" for="NoShow-input">No Show</label>
@@ -269,7 +260,7 @@
 					<div class="col speaker text-center">
 						<label for="TeleSpeaker-input" class="form-label">Tele Speaker</label>
 						<input type="number" class="form-control text-center" id="TeleSpeaker-input" min="0" value="0" required>
-						<div class="invalid-feedback">Please specify how many speaker notes were scored near in teleop.</div>
+						<div class="invalid-feedback">Please specify how many Speaker notes were scored in teleop.</div>
 					</div>
 					<div class="col">
 						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleSpeaker-input'),1)">+1</a>
@@ -346,44 +337,34 @@
 							<input class="form-check-input" type="radio" name="TeleClimb-input" id="TeleClimb-4" value="1" required>
 							<label class="form-check-label" for="TeleClimb-3">Failed</label>
 						</div>
+					</div>
 
+					<!-- Assorted end game checkboxes -->
+					<!-- The Driver Skill, Plays Defense, and Handle Defense lists used to be here -->
+
+					<div class="col">
 						<!-- The Parked checkbox -->
 						<label class="form-check-label" for="Parked-input">Parked</label>
 						<div class="form-check form-switch">
 							<input class="form-check-input" type="checkbox" role="switch" id="Parked-input">
 						</div>
-					</div>
 
-					<!-- The Driver Skill list -->
-					<div class="col">
-						<label>Driver Skill</label>
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="DriveSkill-input" id="DriveSkill-0" value="0" required>
-							<label class="form-check-label" for="DriveSkill-0">Not shown</label>
+						<!-- The Died/Disabled checkbox -->
+						<label class="form-check-label" for="Died-input">Died / Disabled (Comments!)</label>
+						<div class="form-check form-switch">
+							<input class="form-check-input" type="checkbox" role="switch" id="Died-input">
 						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="DriveSkill-input" id="DriveSkill-1" value="1" required>
-							<label class="form-check-label" for="DriveSkill-1">Below Avg.</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="DriveSkill-input" id="DriveSkill-2" value="2" required>
-							<label class="form-check-label" for="DriveSkill-2">Average</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="DriveSkill-input" id="DriveSkill-3" value="3" required>
-							<label class="form-check-label" for="DriveSkill-3">Above Avg.</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="radio" name="DriveSkill-input" id="DriveSkill-4" value="4" required>
-							<label class="form-check-label" for="DriveSkill-4">Exceptional</label>
-						</div>  
-					</div>
 
-					<!-- The Plays Defense list was here -->
+						<!-- The Defense Only checkbox -->
+						<label class="form-check-label" for="DefenseOnly-input">Defense ONLY</label>
+						<div class="form-check form-switch">
+							<input class="form-check-input" type="checkbox" role="switch" id="DefenseOnly-input">
+						</div>
 
-					<!-- The Handle Defense list was here -->
+                    </div>
 
 					<!-- Card list and Assorted end game checkboxes -->
+
 					<div class="col">
 						<!-- The Card list -->
 						<div class="col">
@@ -400,18 +381,6 @@
 								<input class="form-check-input" type="radio" name="Card-input" id="Card-2" value="2" required>
 								<label class="form-check-label" for="Card-2">Red</label>
 							</div>
-						</div>
-
-						<!-- The Died/Disabled checkbox -->
-						<label class="form-check-label" for="Died-input">Died / Disable (Comments!)</label>
-						<div class="form-check form-switch">
-							<input class="form-check-input" type="checkbox" role="switch" id="Died-input">
-						</div>
-
-						<!-- The Defense Only checkbox -->
-						<label class="form-check-label" for="DefenseOnly-input">Defense Only</label>
-						<div class="form-check form-switch">
-							<input class="form-check-input" type="checkbox" role="switch" id="DefenseOnly-input">
 						</div>
 					</div>
 				</div>
@@ -549,7 +518,6 @@
 				if ( $("#input_t:valid").length > 0 &&
 					 $("#input_m:valid").length > 0 &&
 					 $("#input_s:valid").length > 0 &&
-					 $("input[Name='DriveSkill-input']:valid").length > 0 &&
 					 $("input[Name='TeleClimb-input']:valid").length > 0 ) {
 					var data =
 					"{" +
@@ -560,24 +528,20 @@
 					',"a1":'      + JSON.stringify(Number($("#AutoSpeaker-input").val())) +
 					',"a2":'      + JSON.stringify(Number($("#AutoSpeakerMiss-input").val())) +
 					',"a3":'      + JSON.stringify(Number($("#AutoAmp-input").val())) +
-					',"a4":'      + JSON.stringify(Number($("#AutoAmpMiss-input").val())) +
 					',"l":'       + JSON.stringify(Number($("#Leave-input").is(":checked"))) +
 					',"t1":'      + JSON.stringify(Number($("#TeleSpeaker-input").val())) +
 					',"t2":'      + JSON.stringify(Number($("#TeleSpeakerMiss-input").val())) +
 					',"t3":'      + JSON.stringify(Number($("#TeleAmp-input").val())) +
-					',"t4":'      + JSON.stringify(Number($("#TeleAmpMiss-input").val())) +
-					',"t5":'      + JSON.stringify(Number($("input[name='TeleClimb-input']:checked").val())) +
-					',"t6":'      + JSON.stringify(Number($("#Trap-input").val())) +
-					',"t7":'      + JSON.stringify(Number($("#TrapMiss-input").val())) +
+					',"t4":'      + JSON.stringify(Number($("input[name='TeleClimb-input']:checked").val())) +
+					',"t5":'      + JSON.stringify(Number($("#Trap-input").val())) +
+					',"t6":'      + JSON.stringify(Number($("#TrapMiss-input").val())) +
 					',"m":'       + JSON.stringify(Number($("#Mic-input").val())) +
 					',"mm":'      + JSON.stringify(Number($("#MicMiss-input").val())) +
 					',"p":'       + JSON.stringify(Number($("#Parked-input").is(":checked"))) +
-					',"ds":'      + JSON.stringify(Number($("input[name='DriveSkill-input']:checked").val())) +
 					',"ns":'      + JSON.stringify(Number($("#NoShow-input").is(":checked"))) +
 					',"c":'       + JSON.stringify(Number($("input[name='Card-input']:checked").val())) +
 					',"d":'       + JSON.stringify(Number($("#Died-input").is(":checked"))) +
 					',"do":'      + JSON.stringify(Number($("#DefenseOnly-input").is(":checked"))) +
-					',"nn":'      + JSON.stringify(Number($("#NotNear-input").is(":checked"))) +
 					',"co":'      + JSON.stringify($("#Comment-input").val()) +
 					"}";
 					
