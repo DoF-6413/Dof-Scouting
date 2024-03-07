@@ -58,7 +58,15 @@
 				display: inline-block !important;
 				margin: 2rem 0rem;
 				}
-			
+
+			/* Hiding the Amp Miss stuff while keeping our nice formatting */
+
+            .amp-disabled {
+                color: white;
+                background-color: white;
+                border-color: white; /* Also set border color to white, if applicable */
+            }
+
 			/* Adding color highlights to the speaker and amp input fields as subtle hint to scouts who may need it. */
 			
 			.speaker {
@@ -230,7 +238,8 @@
 					<div class="col">
 						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoSpeakerMiss-input'),1)">+1</a>
 					</div>
-					
+
+                    <!-- AutoAmpMiss-input was here but removed after Week1 discussion
 					<div class="col">
 						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoAmpMiss-input'),-1)">-1</a>
 					</div>
@@ -241,6 +250,16 @@
 					</div>
 					<div class="col">
 						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoAmpMiss-input'),1)">+1</a>
+					</div>
+                      Below is how we do preserve our input layout! -->
+					<div class="col amp-disabled">
+						<p></p>
+					</div>
+					<div class="col amp-disabled">
+						<p></p>
+					</div>
+					<div class="col amp-disabled">
+						<p></p>
 					</div>
 				</div>
 				<!-- /.row -->
@@ -294,6 +313,7 @@
 						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleSpeakerMiss-input'),1)">+1</a>
 					</div>
 
+                    <!-- TeleAmpMiss-input was here but removed after Week1 discussion
 					<div class="col">
 						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleAmpMiss-input'),-1)">-1</a>
 					</div>
@@ -304,6 +324,16 @@
 					</div>
 					<div class="col">
 						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleAmpMiss-input'),1)">+1</a>
+					</div>
+                      Below is how we do preserve our input layout! -->
+					<div class="col amp-disabled">
+						<p></p>
+					</div>
+					<div class="col amp-disabled">
+						<p></p>
+					</div>
+					<div class="col amp-disabled">
+						<p></p>
 					</div>
 				</div>
 				<!-- /.row -->
