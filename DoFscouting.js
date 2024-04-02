@@ -62,13 +62,11 @@ function clearScoutingFields() {
 	document.getElementById( "AutoSpeakerMiss-input" ).value = "0";
 
 	document.getElementById( "AutoAmp-input" ).value = "0";
-	// document.getElementById( "AutoAmpMiss-input" ).value = "0";
 
 	document.getElementById( "TeleSpeaker-input" ).value = "0";
 	document.getElementById( "TeleSpeakerMiss-input" ).value = "0";
 
 	document.getElementById( "TeleAmp-input" ).value = "0";
-	// document.getElementById( "TeleAmpMiss-input" ).value = "0";
 
 	document.getElementById( "TeleClimb-0" ).checked = false;
 	document.getElementById( "TeleClimb-1" ).checked = false;
@@ -78,12 +76,6 @@ function clearScoutingFields() {
 
 	// Clear the Climb input
 	clearRadioList( "TeleClimb-input" );
-
-	document.getElementById( "Trap-input" ).value = "0";
-	document.getElementById( "TrapMiss-input" ).value = "0";
-
-	document.getElementById( "Mic-input" ).value = "0";
-	document.getElementById( "MicMiss-input" ).value = "0";
 
 	document.getElementById( "Parked-input" ).checked = false;
 

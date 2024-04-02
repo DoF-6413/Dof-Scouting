@@ -416,67 +416,9 @@
 				</div>
 				<!-- /.row -->
 
-                <!-- The Microphone and Trap scoring -->
+                <!-- The Microphone and Trap scoring were here. Removed them for Worlds. -->
 
-				<div class="row align-items-center">
-					<!-- Microphone scoring -->
-					<div class="col">
-					    <a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#Mic-input'),-1)">-1</a>
-					</div>
-					<div class="col speaker text-center">
-						<label for="Mic-input" class="form-label">Microphone</label>
-						<input type="number" class="form-control text-center" id="Mic-input" min="0" value="0" required>
-						<div class="invalid-feedback">Please specify how many high notes were scored.</div>
-					</div>
-					<div class="col">
-						<a class="btn btn-success btn-small form-control" href="javascript:changeValueWithLimit($('#Mic-input'),1,3)">+1</a>
-					</div>
-
-					<!-- Trap scoring -->
-					<div class="col">
-						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#Trap-input'),-1)">-1</a>
-					</div>
-					<div class="col amp text-center">
-						<label for="Trap-input" class="form-label">Trap</label>
-						<input type="number" class="form-control text-center" id="Trap-input" min="0" value="0" required>
-						<div class="invalid-feedback">Please specify how many trap notes were scored.</div>
-					</div>
-					<div class="col">
-						<a class="btn btn-success btn-small form-control" href="javascript:changeValueWithLimit($('#Trap-input'),1,3)">+1</a>
-					</div>
-				</div>
-				<!-- /.row -->
-
-                <!-- The Microphone and Trap misses -->
-
-				<div class="row align-items-center">
-					<!-- Microphone misses -->
-					<div class="col">
-						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#MicMiss-input'),-1)">-1</a>
-					</div>
-					<div class="col speaker text-center">
-						<label for="MicMiss-input" class="form-label">Microphone Miss</label>
-						<input type="number" class="form-control text-center" id="MicMiss-input" min="0" value="0" required>
-						<div class="invalid-feedback">Please specify how many high notes were missed.</div>
-					</div>
-					<div class="col">
-						<a class="btn btn-success btn-small form-control" href="javascript:changeValueWithLimit($('#MicMiss-input'),1,3)">+1</a>
-					</div>
-
-					<!-- Trap misses -->
-					<div class="col">
-						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TrapMiss-input'),-1)">-1</a>
-					</div>
-					<div class="col amp text-center">
-						<label for="TrapMiss-input" class="form-label">Trap Miss</label>
-						<input type="number" class="form-control text-center" id="TrapMiss-input" min="0" value="0" required>
-						<div class="invalid-feedback">Please specify how many trap notes were missed.</div>
-					</div>
-					<div class="col">
-						<a class="btn btn-success btn-small form-control" href="javascript:changeValueWithLimit($('#TrapMiss-input'),1,10)">+1</a>
-					</div>
-				</div>
-				<!-- /.row -->
+                <!-- The Microphone and Trap misses were here.  Removed them for Worlds. -->
 
 				<!-- Comments and QR button -->
 
@@ -563,10 +505,10 @@
 					',"t2":'      + JSON.stringify(Number($("#TeleSpeakerMiss-input").val())) +
 					',"t3":'      + JSON.stringify(Number($("#TeleAmp-input").val())) +
 					',"t4":'      + JSON.stringify(Number($("input[name='TeleClimb-input']:checked").val())) +
-					',"t5":'      + JSON.stringify(Number($("#Trap-input").val())) +
-					',"t6":'      + JSON.stringify(Number($("#TrapMiss-input").val())) +
-					',"m":'       + JSON.stringify(Number($("#Mic-input").val())) +
-					',"mm":'      + JSON.stringify(Number($("#MicMiss-input").val())) +
+					',"t5":0'     +
+					',"t6":0'     +
+					',"m":0'      +
+					',"mm":0'     +
 					',"p":'       + JSON.stringify(Number($("#Parked-input").is(":checked"))) +
 					',"ns":'      + JSON.stringify(Number($("#NoShow-input").is(":checked"))) +
 					',"c":'       + JSON.stringify(Number($("input[name='Card-input']:checked").val())) +
