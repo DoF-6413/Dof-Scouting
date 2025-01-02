@@ -18,6 +18,8 @@
 // "data" - the stringified JSON used to write the QR code
 // "header" - The text used to write the modal header
 // "scanned" - A boolean that stores whether or not the QR has been scanned already
+// "index" - An integer used to store the index, which is used to sort the objects in reverse order of when they were saved
+// "eventCode" - The event code of the entry, used to filter out old entries from past events
 
 /**
 * Load the configuration data from the config_data value (found in the YYYY_config.js file that should get loaded separately).
