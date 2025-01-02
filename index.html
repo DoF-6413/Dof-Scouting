@@ -39,6 +39,14 @@
 				margin-top: 1rem;
 				}
 			
+			.hidden  {
+				display:none !important;
+			}
+
+			.modal {
+				background-color: rgba(0,0,0,0.5);
+			}
+
 			.form-label {
 				margin-bottom: 0.1rem;
 				}
@@ -46,7 +54,7 @@
 			.form-check label {
 				font-weight: normal;
 				margin-top: auto;
-				}
+			}
 			
 			.btn-huge {
 				--bs-btn-padding-y: 5rem;
@@ -54,10 +62,14 @@
 				--bs-btn-font-size: 7.5rem;
 				}
 			
-			#qrcode img {
-				display: inline-block !important;
-				margin: 2rem 0rem;
-				}
+			#qrcode {
+				margin: 1rem;
+			}
+
+			/* Image components that are children of the QR code should be set too 100% width */
+			#qrcode img{
+				width: 100%;
+			}
 
 			/* Hiding the Amp Miss stuff while keeping our nice formatting */
 
@@ -76,13 +88,17 @@
 			
 			.amp {
 				background-color: rgb(255,165,0)
-				}
+			}
 		</style>
 	</head>
 	<body>
 		<form>
 			<div class="container">
 				<div class="row">
+					<div class="col">
+						<input type="button" value="Unscanned QR codes" onclick="historicalQRModal(false)">
+						<input type="button" value="All QR codes" onclick="historicalQRModal(true)">
+					</div>
 					<div class="col text-end">
 						<input type="button" value="Reset all fields" onClick="resetFormForNextMatch()">
 					</div>
@@ -430,15 +446,50 @@
 
 					<div class="col text-center">
 						<a href="javascript:updateQR()" class="btn btn-primary form-control" style="margin-top: 2.5rem;">Get Code</a>
-						<div id="qrcode"></div>
 					</div>
 				</div>
 				<!-- /.row -->
-	
+
 			</div>
 		</form>
 
+		<div class="modal" id="modal">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="modal-header"></h2>
+					</div>
+					<div class="modal-body">
+						<div id="qrcode"></div> 
+					</div>
+
+					<div id="current-qrcode-modal-buttons" class="modal-button-row hidden">
+						<div class="modal-footer justify-content-between">
+							<a class="btn btn-primary flex-fill" href="javascript:closeModal()">Scan Later</a>
+							<a class="btn btn-success flex-fill" href="javascript:setQRScanned(false); closeModal()">QR Code Scanned</a>
+						</div>
+					</div>
+					<div id="history-unscanned-qrcode-modal-buttons" class="modal-button-row hidden">
+						<div class="modal-footer justify-content-between">
+							<a class="btn btn-secondary flex-fill" href="javascript:navigateQRModal(-1,false)">Previous</a>
+							<a class="btn btn-secondary flex-fill" href="javascript:navigateQRModal(1,false)">Next</a>
+							<a class="btn btn-danger flex-fill" href="javascript:closeModal()">Exit</a>
+							<a class="btn btn-success flex-fill" href="javascript:setQRScanned(true);">Scanned</a>
+						</div>
+					</div>
+					<div id="history-all-qrcode-modal-buttons" class="modal-button-row hidden">
+						<div class="modal-footer justify-content-between">
+							<a class="btn btn-secondary flex-fill" href="javascript:navigateQRModal(-1,true)">Previous</a>
+							<a class="btn btn-secondary flex-fill" href="javascript:navigateQRModal(1,true)">Next</a>
+							<a class="btn btn-danger flex-fill" href="javascript:closeModal()">Exit</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<script type="text/javascript">
+			var data = {}
 			/**
 			* Update a value of a control on the form by the specified ammount
 			*
@@ -491,7 +542,7 @@
 					 $("#input_m:valid").length > 0 &&
 					 $("#input_s:valid").length > 0 &&
 					 $("input[Name='TeleClimb-input']:valid").length > 0 ) {
-					var data =
+					data =
 					"{" +
 					'"key":'      + JSON.stringify(Number($("#input_t").val())) +
 					',"cl":'      + JSON.stringify(getLevel()) +
@@ -517,9 +568,141 @@
 					',"co":'      + JSON.stringify($("#Comment-input").val()) +
 					"}";
 					
-					new QRCode( document.getElementById( "qrcode" ), { text: data, width: 480, height: 480, correctLevel:QRCode.CorrectLevel.L} );
+					var headerText = `${levelKeyToString(getLevel())} ${$("#input_m").val()} - ${$("#input_t").val()}`;
+					
+					var storage = JSON.parse(localStorage.getItem("qrCodes"))
+					storage[headerText] = {
+						"data": data,
+						"header": headerText,
+						"scanned": false,
+						"eventCode": $("#input_e").text(),
+						"index": Object.keys(storage).length,
+					}
+					localStorage.setItem("qrCodes", JSON.stringify(storage))
+
+					openModal(data, headerText, 0);
 					}
 				}
+
+			/*
+			qrcode: The data string of the qr code content
+			headerText: The text that should be displayed as the modal header
+			type: The modal type, determining what buttons are displayed. 0 = the current QR code, 1 - unscanned QR code history, 2 - all QR code history
+			*/
+			function openModal (qrcode, headerText, type) {
+				$("#qrcode").html("")
+
+				new QRCode( document.getElementById( "qrcode" ), { text: qrcode, width: 480, height: 480, correctLevel:QRCode.CorrectLevel.L} );
+				
+				$("#modal-header").text(headerText);
+
+				switch (type) {
+					case 0: 
+						$("#current-qrcode-modal-buttons").removeClass("hidden");
+						$("#history-unscanned-qrcode-modal-buttons").addClass("hidden");
+						$("#history-all-qrcode-modal-buttons").addClass("hidden");
+						break;
+					case 1:
+						$("#history-unscanned-qrcode-modal-buttons").removeClass("hidden");
+						$("#current-qrcode-modal-buttons").addClass("hidden");
+						$("#history-all-qrcode-modal-buttons").addClass("hidden");
+						break;
+					case 2:
+						$("#history-all-qrcode-modal-buttons").removeClass("hidden");
+						$("#current-qrcode-modal-buttons").addClass("hidden");
+						$("#history-unscanned-qrcode-modal-buttons").addClass("hidden");
+						break;
+
+				}
+
+				$("#modal").css("display", "block")
+			}
+
+			// Returns next or previous QR code
+			// direction is 1 or -1 for next or previous 
+			// includeScanned is true when navigating all QR codes, false when only navigating unscanned QR codes, true when navigating all QR codes
+			function navigateQRModal (direction, includeScanned) {
+				const storage = JSON.parse(localStorage.getItem("qrCodes"));
+				var storageKeys = Object.keys(storage);
+
+				// Filter out entries that don't have a matching event code or, if includeScanned is false, that have been scanned already
+				for (key in storage) {
+					if (
+						storage[key].eventCode != $("#input_e").text() ||
+						(storage[key].scanned == true && !includeScanned)
+					) {
+						storageKeys.splice(storageKeys.indexOf(key), 1);
+					}
+				}
+
+				if (storageKeys.length < 1) {
+					closeModal();
+					alert("No more QR codes to show matching this description.");
+					return;
+				}
+
+				// Reverse the order of the entries so the most recent appear first
+				storageKeys.sort((a, b) => 
+					storage[b].index - storage[a].index
+				)
+
+
+				const oldIndex = storageKeys.indexOf($("#modal-header").text());
+				var newIndex = oldIndex + direction;
+
+				// If the direction to navigate is out of range, wrap back around
+				if (newIndex < 0) {
+					newIndex = storageKeys.length - 1;
+				} else if (newIndex > storageKeys.length - 1) {
+					newIndex = 0
+				}
+
+				selectedEntry = storage[storageKeys[newIndex]];
+				openModal(selectedEntry.data, selectedEntry.header, includeScanned ? 2 : 1);
+			}
+
+			// Sets the QR designated with key as scanned
+			// if "next" is true, it will also act as a next button and navigate to the next QR code
+			function setQRScanned (next) {
+				var storage = JSON.parse(localStorage.getItem("qrCodes"));
+				const key = $("#modal-header").text();
+
+				storage[key].scanned = true;
+				localStorage.setItem("qrCodes", JSON.stringify(storage));
+
+				if (next) {
+					navigateQRModal(1, false);
+				} 
+			}
+
+			function closeModal () {
+				$("#modal").css("display", "none");
+			}
+
+			// Opens modal showing past QR codes that can be navigated
+			// includeScanned determines which modal is opened - one for scanning unscanned codes or one for viewing all past codes
+			function historicalQRModal (includeScanned) {
+				var storage = JSON.parse(localStorage.getItem("qrCodes"));
+
+				// Filter out entries that don't have a matching event code or, if includeScanned is false, that have been scanned already
+				for (key in storage) {
+					if (
+						storage[key].eventCode != $("#input_e").text() ||
+						(storage[key].scanned == true && !includeScanned)
+					) {
+						delete storage[key];
+					}
+				}
+
+				if (Object.keys(storage).length < 1) {
+					alert("No QR codes match this description.");
+					return;
+				}
+
+				const lastQR = storage[Object.keys(storage)[Object.keys(storage).length - 1]]
+
+				openModal(lastQR.data, lastQR.header, includeScanned ? 2 : 1)
+			}
 		</script>
 	</body>
 </html>						

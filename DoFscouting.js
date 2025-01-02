@@ -11,6 +11,13 @@
 // input_m = Match number (Match-input on our original form)
 // input_r_## = Robot position (r1, r2, r3, b1, b2, b3)
 // input_t = = Team number (TeamNumber-input on our original form)
+//
+// Local storage data format:
+// All the data is stored in a local storage item called "qrCodes"
+// The item holds a JavaScript object, the contents of each entry are:
+// "data" - the stringified JSON used to write the QR code
+// "header" - The text used to write the modal header
+// "scanned" - A boolean that stores whether or not the QR has been scanned already
 
 /**
 * Load the configuration data from the config_data value (found in the YYYY_config.js file that should get loaded separately).
@@ -422,6 +429,21 @@ function onTeamnameChange( event ) {
 		}
 	}
 
+/**
+ * Take a match level key such as "qm" and convert it to plain text
+ * 
+ * @param {string} key match level key to be converted to a string
+ * @returns The plain text version of the match level key submitted
+ */
+function levelKeyToString(key) {
+	var levelStrings = {
+		"qm": "Qual",
+		"sf": "Playoff",
+		"f": "Final"
+	};
+
+	return levelStrings[key];
+}
 
 /**
 * When the page loads, load in our configuration and then load the team and schedule data
@@ -441,6 +463,11 @@ window.onload = function () {
 
 		// Attempt to load the match schedule for the event from TBA
 		getSchedule( ec );
-		}
-	};
+	}
+
+	// Initialize localStorage
+	if (!JSON.parse(localStorage.getItem("qrCodes"))) {
+		localStorage.setItem("qrCodes", JSON.stringify({}));
+	}
+};
 	
