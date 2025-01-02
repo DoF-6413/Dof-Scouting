@@ -453,6 +453,7 @@
 			</div>
 		</form>
 
+		<!-- QR code viewing modal -->
 		<div class="modal" id="modal">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
@@ -463,12 +464,15 @@
 						<div id="qrcode"></div> 
 					</div>
 
+					<!-- Modal footer buttons for single popup on current QR code-->
 					<div id="current-qrcode-modal-buttons" class="modal-button-row hidden">
 						<div class="modal-footer justify-content-between">
 							<a class="btn btn-primary flex-fill" href="javascript:closeModal()">Scan Later</a>
 							<a class="btn btn-success flex-fill" href="javascript:setQRScanned(false); closeModal()">QR Code Scanned</a>
 						</div>
 					</div>
+
+					<!-- Modal footer buttons for viewing unscanned QR codes-->
 					<div id="history-unscanned-qrcode-modal-buttons" class="modal-button-row hidden">
 						<div class="modal-footer justify-content-between">
 							<a class="btn btn-secondary flex-fill" href="javascript:navigateQRModal(-1,false)">Previous</a>
@@ -477,6 +481,8 @@
 							<a class="btn btn-success flex-fill" href="javascript:setQRScanned(true);">Scanned</a>
 						</div>
 					</div>
+
+					<!-- Modal footer buttons viewing full QR code history -->
 					<div id="history-all-qrcode-modal-buttons" class="modal-button-row hidden">
 						<div class="modal-footer justify-content-between">
 							<a class="btn btn-secondary flex-fill" href="javascript:navigateQRModal(-1,true)">Previous</a>
@@ -489,7 +495,6 @@
 		</div>
 
 		<script type="text/javascript">
-			var data = {}
 			/**
 			* Update a value of a control on the form by the specified ammount
 			*
@@ -542,7 +547,7 @@
 					 $("#input_m:valid").length > 0 &&
 					 $("#input_s:valid").length > 0 &&
 					 $("input[Name='TeleClimb-input']:valid").length > 0 ) {
-					data =
+					var data =
 					"{" +
 					'"key":'      + JSON.stringify(Number($("#input_t").val())) +
 					',"cl":'      + JSON.stringify(getLevel()) +
