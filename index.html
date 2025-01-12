@@ -15,20 +15,65 @@
 			2023 to move all scripts OUT of a folder below the page and into the same subdirectory.  The ScoutingPASS do not have that issue
 			because they simply load them using SCRIPT tags in the head of the page.  I like this KISS approach even if it may not be the current
 			"in favor" way of loading scripts.  We are loading locally over Wi-Fi and we only do it once so we dont need to be fancy and add
-			any deferred loading bits for now. 
+			any deferred loading bits for now.
+
+            NOTE: For 2025 we are adding the ability to locally cache the scouting data so that we do not have to always scan each match
+            before we can scout the next one.  Instead we will locally cache the data for every match no matter if it has been scanned or not.
+            The data can be pulled up and looked at later when it is more convenient.  We are using the Bot Breakdown sites for this which
+            caches data based on the event code so that we can easily look at only the current events data quickly but we can also retrieve
+            previous events data with a simple change of the event code.
 		-->
 		<script src="2024_config.js"></script>
 		<script src="TBAInterface.js"></script>
 		<script src="DoFscouting.js"></script>
 		<script>
+            // Prevent an accidental page refresh or Back from forcing an unwanted page reload.
 			const onConfirmRefresh = function ( event ) {
 				event.preventDefault();
 				return event.returnValue = "Are you sure you want to leave the page?";
 			}
 			
-			window.addEventListener( "beforeunload", onConfirmRefresh, { capture: true } );
+		    window.addEventListener( "beforeunload", onConfirmRefresh, { capture: true } );
+
+            // Add a light/dark mode for the page along with a toggle function.  MAY require updating our
+            // Bootstrap version or adding Bootstrap scripting...  Definitely requires adding use of
+            // Font Awesome files to get the toggle button icon we will use.
+
+            var storedTheme = localStorage.getItem( 'theme' );
+
+            if ( storedTheme == null || storedTheme.length == 0 ) {
+                // No theme stored so use the browsers setting
+                if ( window.matchMedia && window.matchMedia( '(prefers-color-scheme: dark)' ).matches ) {
+                    $('html').attr('data-bs-theme', 'dark');
+                    localStorage.setItem( 'theme', 'dark' );
+                    storedTheme = 'dark';
+                    }
+                else {
+                    localStorage.setItem( 'theme', 'light' );
+                    storedTheme = 'light';
+                    }
+                }
+
+            if ( storedTheme === 'dark' ) {
+                $('html').attr('data-bs-theme', 'dark');
+                }
+
+            function toggleDarkMode() {
+                var currentTheme = $('html').attr('data-bs-theme');
+
+                if (currentTheme === 'dark') {
+                    $('html').removeAttr('data-bs-theme');
+                    localStorage.setItem('theme','light');
+                    }
+                else {
+                    $('html').attr('data-bs-theme', 'dark');
+                    localStorage.setItem('theme','dark');
+                    }
+                }
+
 		</script>
 		<link rel="stylesheet" href="bootstrap.min.css" />
+        <link rel="stylesheet" href="fontawesome.css">
 		<style>
 			body {
 				touch-action: manipulation;
@@ -83,11 +128,51 @@
 		<form>
 			<div class="container">
 				<div class="row">
+					<div class="col text-end align-items-left">
+                        <a href="javascript:toggleDarkMode();" class="btn btn-default"><i class="fa-solid fa-cloud-sun"></i></a>
+                    </div>
+					<div class="col text-end">	
+					    <!-- Emtpy DIV to shift mode toggle to the left -->
+                    </div>
+					<div class="col text-end">	
+					    <!-- Emtpy DIV to shift mode toggle to the left -->
+                    </div>
+					<div class="col text-end">	
+					    <!-- Emtpy DIV to shift mode toggle to the left -->
+                    </div>
+					<div class="col text-end">	
+					    <!-- Emtpy DIV to shift mode toggle to the left -->
+                    </div>
+					<div class="col text-end">	
+					    <!-- Emtpy DIV to shift mode toggle to the left -->
+                    </div>
+					<div class="col text-end">	
+					    <!-- Emtpy DIV to shift mode toggle to the left -->
+                    </div>
+					<div class="col text-end">	
+					    <!-- Emtpy DIV to shift mode toggle to the left -->
+                    </div>
+					<div class="col text-end">	
+					    <!-- Emtpy DIV to shift mode toggle to the left -->
+                    </div>
+					<div class="col text-end">	
+					    <!-- Emtpy DIV to shift mode toggle to the left -->
+                    </div>
+					<div class="col text-end">	
+					    <!-- Emtpy DIV to shift mode toggle to the left -->
+                    </div>
+					<div class="col text-end">	
+					    <!-- Emtpy DIV to shift mode toggle to the left -->
+                    </div>
+					<div class="col text-end">	
+					    <!-- Emtpy DIV to shift mode toggle to the left -->
+                    </div>
 					<div class="col text-end">
 						<input type="button" value="Reset all fields" onClick="resetFormForNextMatch()">
 					</div>
 				</div>
 				<!-- /.row -->
+
 				<div class="row">
 					<!-- This row is intended to hold a warning message if we could not load and parse the config data! -->
 					<p id="header_warning"></p>
