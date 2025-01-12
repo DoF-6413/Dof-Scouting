@@ -13,13 +13,12 @@
 // input_t = = Team number (TeamNumber-input on our original form)
 //
 // Local storage data format:
-// All the data is stored in a local storage item called "qrCodes"
-// The item holds a JavaScript object, the contents of each entry are:
+// Each event has a local storage item named by the event code
+// Within each event code is a list of entries that store QR codes
+// The contents of each entry are:
 // "data" - the stringified JSON used to write the QR code
 // "header" - The text used to write the modal header
 // "scanned" - A boolean that stores whether or not the QR has been scanned already
-// "index" - An integer used to store the index, which is used to sort the objects in reverse order of when they were saved
-// "eventCode" - The event code of the entry, used to filter out old entries from past events
 
 /**
 * Load the configuration data from the config_data value (found in the YYYY_config.js file that should get loaded separately).
@@ -468,8 +467,8 @@ window.onload = function () {
 	}
 
 	// Initialize localStorage
-	if (!JSON.parse(localStorage.getItem("qrCodes"))) {
-		localStorage.setItem("qrCodes", JSON.stringify({}));
+	if (!JSON.parse(localStorage.getItem($("#input_e").text()))) {
+		localStorage.setItem($("#input_e").text(), JSON.stringify([]));
 	}
 };
 	
