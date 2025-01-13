@@ -7,7 +7,9 @@
             caches data based on the event code so that we can easily look at only the current events data quickly but we can also retrieve
             previous events data with a simple change of the event code.
 
-            We also need to update from Bootstrap 5.2.1 to 5.3+ in order to get light & dark mode from Bootstrap.
+            We also need to update from Bootstrap 5.2.1 to 5.3+ in order to get light & dark mode from Bootstrap.  We added Font Awesome 6 Free
+            as well so we can use icons on the mode toggle button.  Details on its use are at https://docs.fontawesome.com/web/setup/host-yourself/webfonts
+            if you are interested.
 		-->
 		<title>Degrees of Freedom Scouting</title>
 		<script src="jquery-3.6.1.min.js"></script>
@@ -63,6 +65,7 @@
             function toggleDarkMode() {
                 var currentTheme = $('html').attr('data-bs-theme');
 
+                // TODO: Toggle amp-disabled colors to be non-white when in dark mode.
                 if (currentTheme === 'dark') {
                     $('html').removeAttr('data-bs-theme');
                     localStorage.setItem('theme','light');
