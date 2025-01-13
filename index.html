@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<!-- For 2025 we are adding the ability to locally cache the scouting data so that we do not have to always scan each match
+            before we can scout the next one.  Instead we will locally cache the data for every match no matter if it has been scanned or not.
+            The data can be pulled up and looked at later when it is more convenient.  We are using the Bot Breakdown sites for this which
+            caches data based on the event code so that we can easily look at only the current events data quickly but we can also retrieve
+            previous events data with a simple change of the event code.
+
+            We also need to update from Bootstrap 5.2.1 to 5.3+ in order to get light & dark mode from Bootstrap.
+		-->
 		<title>Degrees of Freedom Scouting</title>
 		<script src="jquery-3.6.1.min.js"></script>
 		<script src="qrcode.min.js"></script>
@@ -16,14 +24,6 @@
 			because they simply load them using SCRIPT tags in the head of the page.  I like this KISS approach even if it may not be the current
 			"in favor" way of loading scripts.  We are loading locally over Wi-Fi and we only do it once so we dont need to be fancy and add
 			any deferred loading bits for now.
-
-            NOTE: For 2025 we are adding the ability to locally cache the scouting data so that we do not have to always scan each match
-            before we can scout the next one.  Instead we will locally cache the data for every match no matter if it has been scanned or not.
-            The data can be pulled up and looked at later when it is more convenient.  We are using the Bot Breakdown sites for this which
-            caches data based on the event code so that we can easily look at only the current events data quickly but we can also retrieve
-            previous events data with a simple change of the event code.
-
-            We also need to update from Bootstrap 5.2.1 to 5.3+ in order to get light & dark mode from Bootstrap.
 		-->
 		<script src="2024_config.js"></script>
 		<script src="TBAInterface.js"></script>
@@ -77,6 +77,29 @@
 		<link rel="stylesheet" href="bootstrap.min.css" />
         <link rel="stylesheet" href="fontawesome.css">
 		<style>
+            /*!
+             * Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com
+             * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+             * Copyright 2024 Fonticons, Inc.
+             */
+            :root, :host {
+                --fa-style-family-classic: 'Font Awesome 6 Free';
+                --fa-font-solid: normal 900 1em/1 'Font Awesome 6 Free';
+                }
+
+            @font-face {
+                font-family: 'Font Awesome 6 Free';
+                font-style: normal;
+                font-weight: 900;
+                font-display: block;
+                src: url("webfonts/fa-solid-900.woff2") format("woff2"), url("webfonts/fa-solid-900.ttf") format("truetype");
+                }
+
+            .fas,
+            .fa-solid {
+                font-weight: 900;
+                }
+
             body {
 				touch-action: manipulation;
 				}
