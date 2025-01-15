@@ -1,0 +1,41 @@
+teamNumber: The numeric team value (e.g. 6413)
+compLevel: The match level ("qm"=Qualifiers, "qf"=Quarters, "sf"=Semis, "f"=Finals)
+matchNum: The match number (e.g 1)
+name: The scouters name
+
+autoL1: Number of coral scored L1 during autonomous
+autoL1Miss: Number of L1 missed during autonomous
+autoL2: Number of coral scored L2 during autonomous
+autoL2Miss: Number of L2 missed during autonomous
+autoL3: Number of coral scored L3 during autonomous
+autoL3Miss: Number of L3 missed during autonomous
+autoL4: Number of coral scored L4 during autonomous
+autoL4Miss: Number of L4 missed during autonomous
+autoNet: Number of algae scored in net during autonomous
+autoNetMiss: Number of algae missed net during autonomous
+autoProcessor: Number of algae scored in processor during autonomous
+autoProcessorMiss: Number of algae missed processor during autonomous
+
+teleL1: Number of coral scored L1 during teleop
+teleL1Miss: Number of L1 missed during teleop
+teleL2: Number of coral scored L2 during teleop
+teleL2Miss: Number of L2 missed during teleop
+teleL3: Number of coral scored L3 during teleop
+teleL3Miss: Number of L3 missed during teleop
+teleL4: Number of coral scored L4 during teleop
+teleL4Miss: Number of L4 missed during teleop
+teleNet: Number of algae scored in net during teleop
+teleNetMiss: Number of algae missed net during teleop
+teleProcessor: Number of algae scored in processor during teleop
+teleProcessorMiss: Number of algae missed processor during teleop
+
+climb: Did they climb (0=Not Attempted, 1=Shallow, 2=Deep, 3=Failed Shallow, 4=Failed Deep)
+noShow: The robot was a "No Show" for the match (0=No, 1=Yes)
+died: The robot stopped/died during the match (0=No, 1=Yes)
+playDefense: The robot played ONLY defense during the match (0=No, 1=Yes)
+comments: Scouter comments
+
+tipped: REMOVED 2024 (RE-ADD 2025?)
+
+card: REMOVED 2025
+leave: REMOVED 2025

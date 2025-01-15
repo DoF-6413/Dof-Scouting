@@ -54,37 +54,42 @@ function configure() {
 function clearScoutingFields() {
 	// Time to zap all data inputs to be our defaults.  Lets just
 	// do it top to bottom, left to right...
-	document.getElementById( "Leave-input" ).checked = false;
 
-	document.getElementById( "NoShow-input" ).checked = false;
+	// Clear the Auto fields
+	document.getElementById( "AutoL1-input" ).value = "0";
+	document.getElementById( "AutoL1Miss-input" ).value = "0";
+	document.getElementById( "AutoL2-input" ).value = "0";
+	document.getElementById( "AutoL2Miss-input" ).value = "0";
+	document.getElementById( "AutoL3-input" ).value = "0";
+	document.getElementById( "AutoL3Miss-input" ).value = "0";
+	document.getElementById( "AutoL4-input" ).value = "0";
+	document.getElementById( "AutoL4Miss-input" ).value = "0";
 
-	document.getElementById( "AutoSpeaker-input" ).value = "0";
-	document.getElementById( "AutoSpeakerMiss-input" ).value = "0";
+	document.getElementById( "AutoNet-input" ).value = "0";
+	document.getElementById( "AutoNetMiss-input" ).value = "0";
+	document.getElementById( "AutoProcessor-input" ).value = "0";
+	document.getElementById( "AutoProcessorMiss-input" ).value = "0";
 
-	document.getElementById( "AutoAmp-input" ).value = "0";
+	// Clear the Teleop fields
+	document.getElementById( "TeleL1-input" ).value = "0";
+	document.getElementById( "TeleL1Miss-input" ).value = "0";
+	document.getElementById( "TeleL2-input" ).value = "0";
+	document.getElementById( "TeleL2Miss-input" ).value = "0";
+	document.getElementById( "TeleL3-input" ).value = "0";
+	document.getElementById( "TeleL3Miss-input" ).value = "0";
+	document.getElementById( "TeleL4-input" ).value = "0";
+	document.getElementById( "TeleL4Miss-input" ).value = "0";
 
-	document.getElementById( "TeleSpeaker-input" ).value = "0";
-	document.getElementById( "TeleSpeakerMiss-input" ).value = "0";
+	document.getElementById( "TeleNet-input" ).value = "0";
+	document.getElementById( "TeleNetMiss-input" ).value = "0";
+	document.getElementById( "TeleProcessor-input" ).value = "0";
+	document.getElementById( "TeleProcessorMiss-input" ).value = "0";
 
-	document.getElementById( "TeleAmp-input" ).value = "0";
-
-	document.getElementById( "TeleClimb-0" ).checked = false;
-	document.getElementById( "TeleClimb-1" ).checked = false;
-	document.getElementById( "TeleClimb-2" ).checked = false;
-	document.getElementById( "TeleClimb-3" ).checked = false;
-	document.getElementById( "TeleClimb-4" ).checked = false;
 
 	// Clear the Climb input
 	clearRadioList( "TeleClimb-input" );
 
-	document.getElementById( "Parked-input" ).checked = false;
-
-	// Clear the Plays Defense input
-	clearRadioList( "PlayDefense-input" );
-
-	document.getElementById( "Card-0" ).checked = true;
-	document.getElementById( "Card-1" ).checked = false;
-	document.getElementById( "Card-2" ).checked = false;
+	document.getElementById( "NoShow-input" ).checked = false;
 
 	document.getElementById( "Died-input" ).checked = false;
 

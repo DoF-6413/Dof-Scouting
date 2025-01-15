@@ -69,13 +69,13 @@
 
 			/* Adding color highlights to the speaker and amp input fields as subtle hint to scouts who may need it. */
 			
-			.speaker {
+			.coral {
 				color: rgb(255,255,255);
 				background-color: rgb(128,0,128)
 				}
 			
-			.amp {
-				background-color: rgb(255,165,0)
+			.algae {
+				background-color: rgb(77, 218, 209)
 				}
 		</style>
 	</head>
@@ -173,167 +173,375 @@
 
 				<hr class="mt-4 mb-1">
 
-				<div class="row">
-					<!-- The Leave checkbox -->
-					<div class="col">
-						<label class="form-check-label" for="Leave-input">Leave</label>
-						<div class="form-check form-switch">
-							<input class="form-check-input" type="checkbox" role="switch" id="Leave-input">
-						</div>
-					</div>
-
-				
-					<!-- The NoShow checkbox -->
-					<div class="col" onchange="updateNoShow(event)">
-						<label class="form-check-label" for="NoShow-input">No Show</label>
-						<div class="form-check form-switch">
-							<input class="form-check-input" type="checkbox" role="switch" id="NoShow-input">
-						</div>
-					</div>
-				</div>
-				<!-- /.row -->
-			
 				<hr>
 
-				<!-- Below this line are the AUTONOMOUS Speaker / Amp scoring options -->
+				<!-- Below this line are the AUTONOMOUS Coral / Algae scoring options -->
 
-				<!-- The Score row -->
+				<!-- The L4 row -->
 				<div class="row align-items-center">
+					<!-- Score -->
 					<div class="col">
-						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoSpeaker-input'),-1)">-1</a>
+						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoL4-input'),-1)">-1</a>
 					</div>
-					<div class="col speaker text-center">
-						<label for="AutoSpeaker-input" class="form-label">Auto Speaker</label>
-						<input type="number" class="form-control text-center" id="AutoSpeaker-input" min="0" value="0" required>
-						<div class="invalid-feedback">Please specify how many Speaker notes were scored in auto.</div>
+					<div class="col coral text-center">
+						<label for="AutoL4-input" class="form-label">Auto L4</label>
+						<input type="number" class="form-control text-center" id="AutoL4-input" min="0" value="0" required>
+						<div class="invalid-feedback">Please specify how many L4 coral were scored in auto.</div>
 					</div>
 					<div class="col">
-						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoSpeaker-input'),1)">+1</a>
-					</div>
+						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoL4-input'),1)">+1</a>
+					</div>		
 					
+					<!-- Miss -->
 					<div class="col">
-						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoAmp-input'),-1)">-1</a>
+						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoL4Miss-input'),-1)">-1</a>
 					</div>
-					<div class="col amp text-center">
-						<label for="AutoAmp-input" class="form-label">Auto Amp</label>
-						<input type="number" class="form-control text-center" id="AutoAmp-input" min="0" value="0" required>
-						<div class="invalid-feedback">Please specify how many Amp notes were scored in auto.</div>
+					<div class="col coral text-center">
+						<label for="AutoL4Miss-input" class="form-label">Auto L4 Miss</label>
+						<input type="number" class="form-control text-center" id="AutoL4Miss-input" min="0" value="0" required>
+						<div class="invalid-feedback">Please specify how many L4 coral were missed in auto.</div>
 					</div>
 					<div class="col">
-						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoAmp-input'),1)">+1</a>
+						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoL4Miss-input'),1)">+1</a>
 					</div>
 				</div>
 				<!-- /.row -->
-
-				<!-- The Miss row -->
+				
+				<!-- The L3 row -->
 				<div class="row align-items-center">
+					<!-- Score -->
 					<div class="col">
-						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoSpeakerMiss-input'),-1)">-1</a>
+						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoL3-input'),-1)">-1</a>
 					</div>
-					<div class="col speaker text-center">
-						<label for="AutoSpeakerMiss-input" class="form-label">Auto Speaker Miss</label>
-						<input type="number" class="form-control text-center" id="AutoSpeakerMiss-input" min="0" value="0" required>
-						<div class="invalid-feedback">Please specify how many Speaker notes were missed in auto.</div>
-					</div>
-					<div class="col">
-						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoSpeakerMiss-input'),1)">+1</a>
-					</div>
-
-                    <!-- AutoAmpMiss-input was here but removed after Week1 discussion
-					<div class="col">
-						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoAmpMiss-input'),-1)">-1</a>
-					</div>
-					<div class="col amp text-center">
-						<label for="AutoAmpMiss-input" class="form-label">Auto Amp Miss</label>
-						<input type="number" class="form-control text-center" id="AutoAmpMiss-input" min="0" value="0" required>
-						<div class="invalid-feedback">Please set how many Amp notes were missed in auto.</div>
+					<div class="col coral text-center">
+						<label for="AutoL3-input" class="form-label">Auto L3</label>
+						<input type="number" class="form-control text-center" id="AutoL3-input" min="0" value="0" required>
+						<div class="invalid-feedback">Please specify how many L3 coral were scored in auto.</div>
 					</div>
 					<div class="col">
-						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoAmpMiss-input'),1)">+1</a>
+						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoL3-input'),1)">+1</a>
+					</div>		
+					
+					<!-- Miss -->
+					<div class="col">
+						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoL3Miss-input'),-1)">-1</a>
 					</div>
-                      Below is how we do preserve our input layout! -->
-					<div class="col amp-disabled">
-						<p></p>
+					<div class="col coral text-center">
+						<label for="AutoL3Miss-input" class="form-label">Auto L3 Miss</label>
+						<input type="number" class="form-control text-center" id="AutoL3Miss-input" min="0" value="0" required>
+						<div class="invalid-feedback">Please specify how many L3 coral were missed in auto.</div>
 					</div>
-					<div class="col amp-disabled">
-						<p></p>
-					</div>
-					<div class="col amp-disabled">
-						<p></p>
+					<div class="col">
+						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoL3Miss-input'),1)">+1</a>
 					</div>
 				</div>
 				<!-- /.row -->
 
+				<!-- The L2 row -->
+				<div class="row align-items-center">
+					<!-- Score -->
+					<div class="col">
+						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoL2-input'),-1)">-1</a>
+					</div>
+					<div class="col coral text-center">
+						<label for="AutoL2-input" class="form-label">Auto L2</label>
+						<input type="number" class="form-control text-center" id="AutoL2-input" min="0" value="0" required>
+						<div class="invalid-feedback">Please specify how many L2 coral were scored in auto.</div>
+					</div>
+					<div class="col">
+						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoL2-input'),1)">+1</a>
+					</div>		
+					
+					<!-- Miss -->
+					<div class="col">
+						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoL2Miss-input'),-1)">-1</a>
+					</div>
+					<div class="col coral text-center">
+						<label for="AutoL2Miss-input" class="form-label">Auto L2 Miss</label>
+						<input type="number" class="form-control text-center" id="AutoL2Miss-input" min="0" value="0" required>
+						<div class="invalid-feedback">Please specify how many L2 coral were missed in auto.</div>
+					</div>
+					<div class="col">
+						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoL2Miss-input'),1)">+1</a>
+					</div>
+				</div>
+
+				<!-- The L1 row -->
+				<div class="row align-items-center">
+					<!-- Score -->
+					<div class="col">
+						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoL1-input'),-1)">-1</a>
+					</div>
+					<div class="col coral text-center">
+						<label for="AutoL1-input" class="form-label">Auto L1</label>
+						<input type="number" class="form-control text-center" id="AutoL1-input" min="0" value="0" required>
+						<div class="invalid-feedback">Please specify how many L1 coral were scored in auto.</div>
+					</div>
+					<div class="col">
+						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoL1-input'),1)">+1</a>
+					</div>		
+					
+					<!-- Miss -->
+					<div class="col">
+						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoL1Miss-input'),-1)">-1</a>
+					</div>
+					<div class="col coral text-center">
+						<label for="AutoL1Miss-input" class="form-label">Auto L1 Miss</label>
+						<input type="number" class="form-control text-center" id="AutoL1Miss-input" min="0" value="0" required>
+						<div class="invalid-feedback">Please specify how many L1 coral were missed in auto.</div>
+					</div>
+					<div class="col">
+						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoL1Miss-input'),1)">+1</a>
+					</div>
+				</div>
+				<!-- /.row -->
+
+
+				<br>
+
+				<!-- The Net row -->
+				<div class="row align-items-center">
+					<!-- Score -->
+					<div class="col">
+						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoNet-input'),-1)">-1</a>
+					</div>
+					<div class="col algae text-center">
+						<label for="AutoNet-input" class="form-label">Auto Net</label>
+						<input type="number" class="form-control text-center" id="AutoNet-input" min="0" value="0" required>
+						<div class="invalid-feedback">Please specify how many Net algae were scored in auto.</div>
+					</div>
+					<div class="col">
+						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoNet-input'),1)">+1</a>
+					</div>		
+					
+					<!-- Miss -->
+					<div class="col">
+						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoNetMiss-input'),-1)">-1</a>
+					</div>
+					<div class="col algae text-center">
+						<label for="AutoNetMiss-input" class="form-label">Auto Net Miss</label>
+						<input type="number" class="form-control text-center" id="AutoNetMiss-input" min="0" value="0" required>
+						<div class="invalid-feedback">Please specify how many Net algae were missed in auto.</div>
+					</div>
+					<div class="col">
+						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoNetMiss-input'),1)">+1</a>
+					</div>
+				</div>
+				<!-- /.row -->
+
+				<!-- The Processor row -->
+				<div class="row align-items-center">
+					<!-- Score -->
+					<div class="col">
+						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoProcessor-input'),-1)">-1</a>
+					</div>
+					<div class="col algae text-center">
+						<label for="AutoProcessor-input" class="form-label">Auto Net</label>
+						<input type="number" class="form-control text-center" id="AutoProcessor-input" min="0" value="0" required>
+						<div class="invalid-feedback">Please specify how many Processor algae were scored in auto.</div>
+					</div>
+					<div class="col">
+						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoProcessor-input'),1)">+1</a>
+					</div>		
+					
+					<!-- Miss -->
+					<div class="col">
+						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#AutoProcessorMiss-input'),-1)">-1</a>
+					</div>
+					<div class="col algae text-center">
+						<label for="AutoProcessorMiss-input" class="form-label">Auto Processor Miss</label>
+						<input type="number" class="form-control text-center" id="AutoProcessorMiss-input" min="0" value="0" required>
+						<div class="invalid-feedback">Please specify how many Processor algae were missed in auto.</div>
+					</div>
+					<div class="col">
+						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#AutoProcessorMiss-input'),1)">+1</a>
+					</div>
+				</div>
+				<!-- /.row -->
 
 				<hr>
 				<hr>
 				<hr>
 
 				<!-- Below this line are the TELEOP Speaker / Amp scoring options -->
-				
-				<!-- The Score row -->
-				<div class="row align-items-center">
-					<div class="col">
-						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleSpeaker-input'),-1)">-1</a>
-					</div>
-					<div class="col speaker text-center">
-						<label for="TeleSpeaker-input" class="form-label">Tele Speaker</label>
-						<input type="number" class="form-control text-center" id="TeleSpeaker-input" min="0" value="0" required>
-						<div class="invalid-feedback">Please specify how many Speaker notes were scored in teleop.</div>
-					</div>
-					<div class="col">
-						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleSpeaker-input'),1)">+1</a>
-					</div>
 
+				<!-- The L4 row -->
+				<div class="row align-items-center">
+					<!-- Score -->
 					<div class="col">
-						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleAmp-input'),-1)">-1</a>
+						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleL4-input'),-1)">-1</a>
 					</div>
-					<div class="col amp text-center">
-						<label for="TeleAmp-input" class="form-label">Tele Amp</label>
-						<input type="number" class="form-control text-center" id="TeleAmp-input" min="0" value="0" required>
-						<div class="invalid-feedback">Please specify how many Amp notes were scored in teleop.</div>
+					<div class="col coral text-center">
+						<label for="TeleL4-input" class="form-label">Tele L4</label>
+						<input type="number" class="form-control text-center" id="TeleL4-input" min="0" value="0" required>
+						<div class="invalid-feedback">Please specify how many L4 coral were scored in tele.</div>
 					</div>
 					<div class="col">
-						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleAmp-input'),1)">+1</a>
+						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleL4-input'),1)">+1</a>
+					</div>		
+					
+					<!-- Miss -->
+					<div class="col">
+						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleL4Miss-input'),-1)">-1</a>
+					</div>
+					<div class="col coral text-center">
+						<label for="TeleL4Miss-input" class="form-label">Tele L4 Miss</label>
+						<input type="number" class="form-control text-center" id="TeleL4Miss-input" min="0" value="0" required>
+						<div class="invalid-feedback">Please specify how many L4 coral were missed in tele.</div>
+					</div>
+					<div class="col">
+						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleL4Miss-input'),1)">+1</a>
+					</div>
+				</div>
+				<!-- /.row -->
+				
+				<!-- The L3 row -->
+				<div class="row align-items-center">
+					<!-- Score -->
+					<div class="col">
+						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleL3-input'),-1)">-1</a>
+					</div>
+					<div class="col coral text-center">
+						<label for="TeleL3-input" class="form-label">Tele L3</label>
+						<input type="number" class="form-control text-center" id="TeleL3-input" min="0" value="0" required>
+						<div class="invalid-feedback">Please specify how many L3 coral were scored in tele.</div>
+					</div>
+					<div class="col">
+						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleL3-input'),1)">+1</a>
+					</div>		
+					
+					<!-- Miss -->
+					<div class="col">
+						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleL3Miss-input'),-1)">-1</a>
+					</div>
+					<div class="col coral text-center">
+						<label for="TeleL3Miss-input" class="form-label">Tele L3 Miss</label>
+						<input type="number" class="form-control text-center" id="TeleL3Miss-input" min="0" value="0" required>
+						<div class="invalid-feedback">Please specify how many L3 coral were missed in tele.</div>
+					</div>
+					<div class="col">
+						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleL3Miss-input'),1)">+1</a>
 					</div>
 				</div>
 				<!-- /.row -->
 
-				<!-- The Miss row -->
+				<!-- The L2 row -->
 				<div class="row align-items-center">
+					<!-- Score -->
 					<div class="col">
-						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleSpeakerMiss-input'),-1)">-1</a>
+						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleL2-input'),-1)">-1</a>
 					</div>
-					<div class="col speaker text-center">
-						<label for="TeleSpeakerMiss-input" class="form-label">Tele Speaker Miss</label>
-						<input type="number" class="form-control text-center" id="TeleSpeakerMiss-input" min="0" value="0" required>
-						<div class="invalid-feedback">Please specify how many speaker notes were missed in teleop.</div>
+					<div class="col coral text-center">
+						<label for="TeleL2-input" class="form-label">Tele L2</label>
+						<input type="number" class="form-control text-center" id="TeleL2-input" min="0" value="0" required>
+						<div class="invalid-feedback">Please specify how many L2 coral were scored in tele.</div>
 					</div>
 					<div class="col">
-						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleSpeakerMiss-input'),1)">+1</a>
+						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleL2-input'),1)">+1</a>
+					</div>		
+					
+					<!-- Miss -->
+					<div class="col">
+						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleL2Miss-input'),-1)">-1</a>
 					</div>
+					<div class="col coral text-center">
+						<label for="TeleL2Miss-input" class="form-label">Tele L2 Miss</label>
+						<input type="number" class="form-control text-center" id="TeleL2Miss-input" min="0" value="0" required>
+						<div class="invalid-feedback">Please specify how many L2 coral were missed in tele.</div>
+					</div>
+					<div class="col">
+						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleL2Miss-input'),1)">+1</a>
+					</div>
+				</div>
 
-                    <!-- TeleAmpMiss-input was here but removed after Week1 discussion
+				<!-- The L1 row -->
+				<div class="row align-items-center">
+					<!-- Score -->
 					<div class="col">
-						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleAmpMiss-input'),-1)">-1</a>
+						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleL1-input'),-1)">-1</a>
 					</div>
-					<div class="col amp text-center">
-						<label for="TeleAmpMiss-input" class="form-label">Tele Amp Miss</label>
-						<input type="number" class="form-control text-center" id="TeleAmpMiss-input" min="0" value="0" required>
-						<div class="invalid-feedback">Please specify how many amp notes were missed in teleop.</div>
+					<div class="col coral text-center">
+						<label for="TeleL1-input" class="form-label">Tele L1</label>
+						<input type="number" class="form-control text-center" id="TeleL1-input" min="0" value="0" required>
+						<div class="invalid-feedback">Please specify how many L1 coral were scored in tele.</div>
 					</div>
 					<div class="col">
-						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleAmpMiss-input'),1)">+1</a>
+						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleL1-input'),1)">+1</a>
+					</div>		
+					
+					<!-- Miss -->
+					<div class="col">
+						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleL1Miss-input'),-1)">-1</a>
 					</div>
-                      Below is how we do preserve our input layout! -->
-					<div class="col amp-disabled">
-						<p></p>
+					<div class="col coral text-center">
+						<label for="TeleL1Miss-input" class="form-label">Tele L1 Miss</label>
+						<input type="number" class="form-control text-center" id="TeleL1Miss-input" min="0" value="0" required>
+						<div class="invalid-feedback">Please specify how many L1 coral were missed in tele.</div>
 					</div>
-					<div class="col amp-disabled">
-						<p></p>
+					<div class="col">
+						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleL1Miss-input'),1)">+1</a>
 					</div>
-					<div class="col amp-disabled">
-						<p></p>
+				</div>
+				<!-- /.row -->
+
+				<br>
+
+				<!-- The Net row -->
+				<div class="row align-items-center">
+					<!-- Score -->
+					<div class="col">
+						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleNet-input'),-1)">-1</a>
+					</div>
+					<div class="col algae text-center">
+						<label for="TeleNet-input" class="form-label">Tele Net</label>
+						<input type="number" class="form-control text-center" id="TeleNet-input" min="0" value="0" required>
+						<div class="invalid-feedback">Please specify how many Net algae were scored in tele.</div>
+					</div>
+					<div class="col">
+						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleNet-input'),1)">+1</a>
+					</div>		
+					
+					<!-- Miss -->
+					<div class="col">
+						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleNetMiss-input'),-1)">-1</a>
+					</div>
+					<div class="col algae text-center">
+						<label for="TeleNetMiss-input" class="form-label">Tele Net Miss</label>
+						<input type="number" class="form-control text-center" id="TeleNetMiss-input" min="0" value="0" required>
+						<div class="invalid-feedback">Please specify how many Net algae were missed in tele.</div>
+					</div>
+					<div class="col">
+						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleNetMiss-input'),1)">+1</a>
+					</div>
+				</div>
+				<!-- /.row -->
+
+				<!-- The Processor row -->
+				<div class="row align-items-center">
+					<!-- Score -->
+					<div class="col">
+						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleProcessor-input'),-1)">-1</a>
+					</div>
+					<div class="col algae text-center">
+						<label for="TeleProcessor-input" class="form-label">Tele Processor</label>
+						<input type="number" class="form-control text-center" id="TeleProcessor-input" min="0" value="0" required>
+						<div class="invalid-feedback">Please specify how many Processor algae were scored in tele.</div>
+					</div>
+					<div class="col">
+						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleProcessor-input'),1)">+1</a>
+					</div>		
+					
+					<!-- Miss -->
+					<div class="col">
+						<a class="btn btn-danger btn-small form-control" href="javascript:changeValue($('#TeleProcessorMiss-input'),-1)">-1</a>
+					</div>
+					<div class="col algae text-center">
+						<label for="TeleProcessorMiss-input" class="form-label">Tele Processor Miss</label>
+						<input type="number" class="form-control text-center" id="TeleProcessorMiss-input" min="0" value="0" required>
+						<div class="invalid-feedback">Please specify how many Processor algae were missed in tele.</div>
+					</div>
+					<div class="col">
+						<a class="btn btn-success btn-small form-control" href="javascript:changeValue($('#TeleProcessorMiss-input'),1)">+1</a>
 					</div>
 				</div>
 				<!-- /.row -->
@@ -344,7 +552,7 @@
 				<!-- Below this line are the END GAME lists and checkboxes -->
 
 				<div class="row">
-					<!-- Climbing and Parked checkbox -->
+					<!-- Climb selector -->
 					<div class="col">
 						<label>Climb</label>
 						<div class="form-check">
@@ -353,30 +561,32 @@
 						</div>
 						<div class="form-check">
 							<input class="form-check-input" type="radio" name="TeleClimb-input" id="TeleClimb-1" value="2" required>
-							<label class="form-check-label" for="TeleClimb-1">Single</label>
+							<label class="form-check-label" for="TeleClimb-1">Shallow</label>
 						</div>
 						<div class="form-check">
 							<input class="form-check-input" type="radio" name="TeleClimb-input" id="TeleClimb-2" value="3" required>
-							<label class="form-check-label" for="TeleClimb-2">Double</label>
+							<label class="form-check-label" for="TeleClimb-2">Deep</label>
 						</div>
 						<div class="form-check">
 							<input class="form-check-input" type="radio" name="TeleClimb-input" id="TeleClimb-3" value="4" required>
-							<label class="form-check-label" for="TeleClimb-3">Triple</label>
+							<label class="form-check-label" for="TeleClimb-3">Failed Shallow</label>
 						</div>
 						<div class="form-check">
 							<input class="form-check-input" type="radio" name="TeleClimb-input" id="TeleClimb-4" value="1" required>
-							<label class="form-check-label" for="TeleClimb-4">Failed</label>
+							<label class="form-check-label" for="TeleClimb-4">Failed Deep</label>
 						</div>
 					</div>
 
 					<!-- Assorted end game checkboxes -->
-					<!-- The Driver Skill, Plays Defense, and Handle Defense lists used to be here -->
+					<!-- The Driver Skill, Plays Defense, Parked, and Handle Defense lists used to be here -->
 
 					<div class="col">
-						<!-- The Parked checkbox -->
-						<label class="form-check-label" for="Parked-input">Parked</label>
-						<div class="form-check form-switch">
-							<input class="form-check-input" type="checkbox" role="switch" id="Parked-input">
+						<!-- The NoShow checkbox -->
+						<div class="col" onchange="updateNoShow(event)">
+							<label class="form-check-label" for="NoShow-input">No Show</label>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" role="switch" id="NoShow-input">
+							</div>
 						</div>
 
 						<!-- The Died/Disabled checkbox -->
@@ -393,26 +603,7 @@
 
                     </div>
 
-					<!-- Card list and Assorted end game checkboxes -->
-
-					<div class="col">
-						<!-- The Card list -->
-						<div class="col">
-							<label>Card</label>
-							<div class="form-check">
-								<input class="form-check-input" type="radio" name="Card-input" id="Card-0" value="0" checked required>
-								<label class="form-check-label" for="Card-0">None</label>
-							</div>
-							<div class="form-check">
-								<input class="form-check-input" type="radio" name="Card-input" id="Card-1" value="1" required>
-								<label class="form-check-label" for="Card-1">Yellow</label>
-							</div>
-							<div class="form-check">
-								<input class="form-check-input" type="radio" name="Card-input" id="Card-2" value="2" required>
-								<label class="form-check-label" for="Card-2">Red</label>
-							</div>
-						</div>
-					</div>
+					<!-- The Card list selector used to be here -->
 				</div>
 				<!-- /.row -->
 
@@ -497,21 +688,32 @@
 					',"cl":'      + JSON.stringify(getLevel()) +
 					',"mn":'      + JSON.stringify(Number($("#input_m").val())) +
 					',"i":'       + JSON.stringify($("#input_s").val()) +
-					',"a1":'      + JSON.stringify(Number($("#AutoSpeaker-input").val())) +
-					',"a2":'      + JSON.stringify(Number($("#AutoSpeakerMiss-input").val())) +
-					',"a3":'      + JSON.stringify(Number($("#AutoAmp-input").val())) +
-					',"l":'       + JSON.stringify(Number($("#Leave-input").is(":checked"))) +
-					',"t1":'      + JSON.stringify(Number($("#TeleSpeaker-input").val())) +
-					',"t2":'      + JSON.stringify(Number($("#TeleSpeakerMiss-input").val())) +
-					',"t3":'      + JSON.stringify(Number($("#TeleAmp-input").val())) +
-					',"t4":'      + JSON.stringify(Number($("input[name='TeleClimb-input']:checked").val())) +
-					',"t5":0'     +
-					',"t6":0'     +
-					',"m":0'      +
-					',"mm":0'     +
-					',"p":'       + JSON.stringify(Number($("#Parked-input").is(":checked"))) +
+					',"al1":'      + JSON.stringify(Number($("#AutoL1-input").val())) +
+					',"al1m":'      + JSON.stringify(Number($("#AutoL1Miss-input").val())) +
+					',"al2":'      + JSON.stringify(Number($("#AutoL2-input").val())) +
+					',"al2m":'      + JSON.stringify(Number($("#AutoL2Miss-input").val())) +
+					',"al3":'      + JSON.stringify(Number($("#AutoL3-input").val())) +
+					',"al3m":'      + JSON.stringify(Number($("#AutoL3Miss-input").val())) +
+					',"al4":'      + JSON.stringify(Number($("#AutoL4-input").val())) +
+					',"al4m":'      + JSON.stringify(Number($("#AutoL4Miss-input").val())) +
+					',"an":'      + JSON.stringify(Number($("#AutoNet-input").val())) +
+					',"anm":'      + JSON.stringify(Number($("#AutoNetMiss-input").val())) +
+					',"ap":'      + JSON.stringify(Number($("#AutoProcessor-input").val())) +
+					',"apm":'      + JSON.stringify(Number($("#AutoProcessorMiss-input").val())) +
+					',"tl1":'      + JSON.stringify(Number($("#TeleL1-input").val())) +
+					',"tl1m":'      + JSON.stringify(Number($("#TeleL1Miss-input").val())) +
+					',"tl2":'      + JSON.stringify(Number($("#TeleL2-input").val())) +
+					',"tl2m":'      + JSON.stringify(Number($("#TeleL2Miss-input").val())) +
+					',"tl3":'      + JSON.stringify(Number($("#TeleL3-input").val())) +
+					',"tl3m":'      + JSON.stringify(Number($("#TeleL3Miss-input").val())) +
+					',"tl4":'      + JSON.stringify(Number($("#TeleL4-input").val())) +
+					',"tl4m":'      + JSON.stringify(Number($("#TeleL4Miss-input").val())) +
+					',"tn":'      + JSON.stringify(Number($("#TeleNet-input").val())) +
+					',"tnm":'      + JSON.stringify(Number($("#TeleNetMiss-input").val())) +
+					',"tp":'      + JSON.stringify(Number($("#TeleProcessor-input").val())) +
+					',"tpm":'      + JSON.stringify(Number($("#TeleProcessorMiss-input").val())) +
+					',"tc":'      + JSON.stringify(Number($("input[name='TeleClimb-input']:checked").val())) +
 					',"ns":'      + JSON.stringify(Number($("#NoShow-input").is(":checked"))) +
-					',"c":'       + JSON.stringify(Number($("input[name='Card-input']:checked").val())) +
 					',"d":'       + JSON.stringify(Number($("#Died-input").is(":checked"))) +
 					',"do":'      + JSON.stringify(Number($("#DefenseOnly-input").is(":checked"))) +
 					',"co":'      + JSON.stringify($("#Comment-input").val()) +
