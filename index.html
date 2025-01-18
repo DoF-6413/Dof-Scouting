@@ -62,6 +62,13 @@
 				--bs-btn-font-size: 7.5rem;
 				}
 			
+			/* Styles for modal footer buttons to create three columns of two buttons */
+			#history-qrcode-modal-buttons .btn {
+				display: block;
+				width:100%;
+				margin-bottom: 10px
+				}
+
 			/* QR codes changed in 2025 to being displayed in a modal dialog instead of being embedded in the page */
 			#qrcode {
 				margin: 1rem;
@@ -97,10 +104,10 @@
 			<div class="container">
 				<div class="row">
 					<div class="col">
-						<input type="button" value="Unscanned QR codes" onclick="historicalQRModal(false)">
-						<input type="button" value="All QR codes" onclick="historicalQRModal(true)">
+						<input type="button" value="Past QR codes" onclick="historicalQRModal()">
 					</div>
 					<div class="col text-end">
+						<input type="button" value="Clear QR code history" style="margin-right: 20px" onclick="if (confirm('Are you SURE you want to clear the entire QR code history?')) {localStorage.clear()}">
 						<input type="button" value="Reset all fields" onClick="resetFormForNextMatch()">
 					</div>
 				</div>
@@ -468,27 +475,26 @@
 					<!-- Modal footer buttons for single popup on current QR code-->
 					<div id="current-qrcode-modal-buttons" class="modal-button-row hidden">
 						<div class="modal-footer justify-content-between">
-							<a class="btn btn-secondary flex-fill" href="javascript:closeModal()">Scan Later</a>
-							<a class="btn btn-primary flex-fill" href="javascript:setQRScanned(false); closeModal()">QR Code Scanned</a>
+							<a class="btn btn-danger flex-fill" href="javascript:closeModal(); resetFormForNextMatch()">Exit</a>
+							<a class="btn btn-primary set-qr-scanned-btn flex-fill" href="javascript:setQRScanned()">Scanned: ☐</a>
 						</div>
 					</div>
 
-					<!-- Modal footer buttons for viewing unscanned QR codes-->
-					<div id="history-unscanned-qrcode-modal-buttons" class="modal-button-row hidden">
-						<div class="modal-footer justify-content-between">
-							<a class="btn btn-secondary flex-fill" href="javascript:navigateQRModal(-1,false)">Previous</a>
-							<a class="btn btn-secondary flex-fill" href="javascript:navigateQRModal(1,false)">Next</a>
-							<a class="btn btn-danger flex-fill" href="javascript:closeModal()">Exit</a>
-							<a class="btn btn-primary set-qr-scanned-btn flex-fill" href="javascript:setQRScanned();">Set to Scanned</a>
-						</div>
-					</div>
-
-					<!-- Modal footer buttons viewing full QR code history -->
-					<div id="history-all-qrcode-modal-buttons" class="modal-button-row hidden">
-						<div class="modal-footer justify-content-between">
-							<a class="btn btn-secondary flex-fill" href="javascript:navigateQRModal(-1,true)">Previous</a>
-							<a class="btn btn-secondary flex-fill" href="javascript:navigateQRModal(1,true)">Next</a>
-							<a class="btn btn-danger flex-fill" href="javascript:closeModal()">Exit</a>
+					<!-- Modal footer buttons for viewing historical QR codes-->
+					<div id="history-qrcode-modal-buttons" class="modal-button-row hidden">
+						<div class="modal-footer">
+							<div class="col">
+								<a class="btn btn-secondary flex-fill" href="javascript:navigateQRModal(-1, false)">Previous Unscanned</a>
+								<a class="btn btn-secondary flex-fill" href="javascript:navigateQRModal(-1,true)">Previous</a>
+							</div>
+							<div class="col">
+								<a class="btn btn-secondary flex-fill" href="javascript:navigateQRModal(1, false)">Next Unscanned</a>
+								<a class="btn btn-secondary flex-fill" href="javascript:navigateQRModal(1, true)">Next</a>
+							</div>
+							<div class="col">
+								<a class="btn btn-primary set-qr-scanned-btn flex-fill" href="javascript:setQRScanned();">Scanned: ☐</a>
+								<a class="btn btn-danger flex-fill" href="javascript:closeModal()">Exit</a>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -585,7 +591,7 @@
 					storage.push(entry);
 					localStorage.setItem($("#input_e").text(), JSON.stringify(storage));
 
-					openModal(data, headerText, 0, storage.length - 1);
+					openModal(entry, storage.length - 1, 0);
 					}
 				}
 
@@ -595,31 +601,36 @@
 			type: The modal type, determining what buttons are displayed. 0 = the current QR code, 1 - unscanned QR code history, 2 - all QR code history
 			qrIndex: The index of the currently selected entry in the list of entries under an event code
 			*/
-			function openModal (qrcode, headerText, type, qrIndex) {
+			function openModal (qrData, qrIndex, type) {
 				// Reset the modal
 				$("#qrcode").html("");
-				$(".set-qr-scanned-btn").removeClass("btn-success").text("Set to Scanned");
 
-				new QRCode( document.getElementById( "qrcode" ), { text: qrcode, width: 480, height: 480, correctLevel:QRCode.CorrectLevel.L} );
-				
-				$("#modal-header").text(headerText);
+				// Set up the modal for the QR
+				new QRCode( document.getElementById( "qrcode" ), { text: qrData["data"], width: 480, height: 480, correctLevel:QRCode.CorrectLevel.L} );
+				$("#modal-header").text(qrData["header"]);
 				$("#modal").attr("data-selected-entry-index", qrIndex);
+				
+				if (qrData["scanned"]) {
+					$(".set-qr-scanned-btn")
+						.addClass("btn-success")
+						.removeClass("btn-primary")
+						.text("Scanned: ☑");
+				} else {
+					$(".set-qr-scanned-btn")
+						.addClass("btn-primary")
+						.removeClass("btn-success")
+						.text("Scanned: ☐");
 
+				}
+				
 				switch (type) {
 					case 0: 
 						$("#current-qrcode-modal-buttons").removeClass("hidden");
-						$("#history-unscanned-qrcode-modal-buttons").addClass("hidden");
-						$("#history-all-qrcode-modal-buttons").addClass("hidden");
+						$("#history-qrcode-modal-buttons").addClass("hidden");
 						break;
 					case 1:
 						$("#current-qrcode-modal-buttons").addClass("hidden");
-						$("#history-unscanned-qrcode-modal-buttons").removeClass("hidden");
-						$("#history-all-qrcode-modal-buttons").addClass("hidden");
-						break;
-					case 2:
-						$("#current-qrcode-modal-buttons").addClass("hidden");
-						$("#history-unscanned-qrcode-modal-buttons").addClass("hidden");
-						$("#history-all-qrcode-modal-buttons").removeClass("hidden");
+						$("#history-qrcode-modal-buttons").removeClass("hidden");
 						break;
 				}
 
@@ -636,11 +647,7 @@
 				// If there are no remaining entries, close the modal and alert the user.
 				if (filteredStorage.length < 1) {
 					closeModal();
-					alert(
-						includeScanned ?
-							"No QR codes to display for this event." :
-							"No unscanned QR codes to display for this event."
-					);
+					alert("No QR codes to display for this event.");
 					return;
 				}
 
@@ -650,18 +657,35 @@
 				const newIndex = oldIndex + direction;
 				const selectedEntry = filteredStorage[newIndex];
 
-				openModal(selectedEntry.data, selectedEntry.header, includeScanned ? 2 : 1, storage.indexOf(selectedEntry));
+				if (!selectedEntry) {
+					return;
+				}
+
+				openModal(selectedEntry, storage.indexOf(selectedEntry), 1);
 			}
 
 			// Sets the QR designated with key as scanned
-			// if "next" is true, it will also act as a next button and navigate to the next QR code
-			function setQRScanned (next) {
+			function setQRScanned () {
 				var storage = JSON.parse(localStorage.getItem($("#input_e").text()));
 				const index = parseInt($("#modal").attr("data-selected-entry-index"));
-				storage[index].scanned = true;
-				localStorage.setItem($("#input_e").text(), JSON.stringify(storage));
+				const previouslyScanned = storage[index].scanned;
 
-				$(".set-qr-scanned-btn").addClass("btn-success").text("Scanned");
+				if (previouslyScanned) {
+					$(".set-qr-scanned-btn")
+						.addClass("btn-primary")
+						.removeClass("btn-success")
+						.text("Scanned: ☐");
+				} else {
+					$(".set-qr-scanned-btn")
+						.addClass("btn-success")
+						.removeClass("btn-primary")
+						.text("Scanned: ☑");
+				}
+
+				console.log("setting scanned", previouslyScanned, index)
+				// Toggle the scanned boolean
+				storage[index].scanned = !previouslyScanned;
+				localStorage.setItem($("#input_e").text(), JSON.stringify(storage));
 			}
 
 			function closeModal () {
@@ -670,23 +694,17 @@
 
 			// Opens modal showing past QR codes that can be navigated
 			// includeScanned determines which modal is opened - one for scanning unscanned codes or one for viewing all past codes
-			function historicalQRModal (includeScanned) {
+			function historicalQRModal () {
 				const storage = JSON.parse(localStorage.getItem($("#input_e").text()));
-				var filteredStorage = storage.filter((entry) => !entry.scanned || includeScanned);
 
-
-				if (filteredStorage.length < 1) {
-					alert(
-						includeScanned ?
-							"No QR codes to display for this event." :
-							"No unscanned QR codes to display for this event."
-					);
+				if (storage.length < 1) {
+					alert("No unscanned QR codes to display for this event.");
 					return;
 				}
 
-				const firstQR = filteredStorage[0];
+				const firstQR = storage[0];
 
-				openModal(firstQR.data, firstQR.header, includeScanned ? 2 : 1, storage.indexOf(firstQR));
+				openModal(firstQR, storage.indexOf(firstQR), 1);
 			}
 		</script>
 	</body>
