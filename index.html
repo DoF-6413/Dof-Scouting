@@ -39,8 +39,7 @@
 			
 		    window.addEventListener( "beforeunload", onConfirmRefresh, { capture: true } );
 
-            // Add a light/dark mode for the page along with a toggle function.  MAY require updating our
-            // Bootstrap version or adding Bootstrap scripting...  Definitely requires adding use of
+            // Add a light/dark mode for the page along with a toggle function.  This required a newer Bootstrap and adding use of
             // Font Awesome files to get the toggle button icon we will use.
 
             var storedTheme = localStorage.getItem( 'theme' );
