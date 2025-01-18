@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<!-- For 2025 we are adding the ability to locally cache the scouting data so that we do not have to always scan each match
+            before we can scout the next one.  Instead we will locally cache the data for every match no matter if it has been scanned or not.
+            The data can be pulled up and looked at later when it is more convenient.  We are using the Bot Breakdown sites for this which
+            caches data based on the event code so that we can easily look at only the current events data quickly but we can also retrieve
+            previous events data with a simple change of the event code.
+
+            We also need to update from Bootstrap 5.2.1 to 5.3+ in order to get light & dark mode from Bootstrap.  We added Font Awesome 6 Free
+            as well so we can use icons on the mode toggle button.  Details on its use are at https://docs.fontawesome.com/web/setup/host-yourself/webfonts
+            if you are interested.
+		-->
 		<title>Degrees of Freedom Scouting</title>
 		<script src="jquery-3.6.1.min.js"></script>
 		<script src="qrcode.min.js"></script>
@@ -21,16 +31,78 @@
 		<script src="TBAInterface.js"></script>
 		<script src="DoFscouting.js"></script>
 		<script>
+            // Prevent an accidental page refresh or Back from forcing an unwanted page reload.
 			const onConfirmRefresh = function ( event ) {
 				event.preventDefault();
 				return event.returnValue = "Are you sure you want to leave the page?";
 			}
 			
-			window.addEventListener( "beforeunload", onConfirmRefresh, { capture: true } );
+		    window.addEventListener( "beforeunload", onConfirmRefresh, { capture: true } );
+
+            // Add a light/dark mode for the page along with a toggle function.  This required a newer Bootstrap and adding use of
+            // Font Awesome files to get the toggle button icon we will use.
+
+            var storedTheme = localStorage.getItem( 'theme' );
+
+            if ( storedTheme == null || storedTheme.length == 0 ) {
+                // No theme stored so use the browsers setting
+                if ( window.matchMedia && window.matchMedia( '(prefers-color-scheme: dark)' ).matches ) {
+                    $('html').attr('data-bs-theme', 'dark');
+                    localStorage.setItem( 'theme', 'dark' );
+                    storedTheme = 'dark';
+                    }
+                else {
+                    localStorage.setItem( 'theme', 'light' );
+                    storedTheme = 'light';
+                    }
+                }
+
+            if ( storedTheme === 'dark' ) {
+                $('html').attr('data-bs-theme', 'dark');
+                }
+
+            function toggleDarkMode() {
+                var currentTheme = $('html').attr('data-bs-theme');
+
+                // TODO: Toggle amp-disabled colors to be non-white when in dark mode.
+                if (currentTheme === 'dark') {
+                    $('html').removeAttr('data-bs-theme');
+                    localStorage.setItem('theme','light');
+                    }
+                else {
+                    $('html').attr('data-bs-theme', 'dark');
+                    localStorage.setItem('theme','dark');
+                    }
+                }
+
 		</script>
 		<link rel="stylesheet" href="bootstrap.min.css" />
+        <link rel="stylesheet" href="fontawesome.css">
 		<style>
-			body {
+            /*!
+             * Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com
+             * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+             * Copyright 2024 Fonticons, Inc.
+             */
+            :root, :host {
+                --fa-style-family-classic: 'Font Awesome 6 Free';
+                --fa-font-solid: normal 900 1em/1 'Font Awesome 6 Free';
+                }
+
+            @font-face {
+                font-family: 'Font Awesome 6 Free';
+                font-style: normal;
+                font-weight: 900;
+                font-display: block;
+                src: url("webfonts/fa-solid-900.woff2") format("woff2"), url("webfonts/fa-solid-900.ttf") format("truetype");
+                }
+
+            .fas,
+            .fa-solid {
+                font-weight: 900;
+                }
+
+            body {
 				touch-action: manipulation;
 				}
 			
@@ -83,11 +155,15 @@
 		<form>
 			<div class="container">
 				<div class="row">
+					<div class="col align-items-left">
+                        <a href="javascript:toggleDarkMode();" class="btn btn-default"><i class="fa-solid fa-cloud-sun"></i></a>
+                    </div>
 					<div class="col text-end">
 						<input type="button" value="Reset all fields" onClick="resetFormForNextMatch()">
 					</div>
 				</div>
 				<!-- /.row -->
+
 				<div class="row">
 					<!-- This row is intended to hold a warning message if we could not load and parse the config data! -->
 					<p id="header_warning"></p>
