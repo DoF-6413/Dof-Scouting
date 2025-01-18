@@ -1,5 +1,5 @@
 teamNumber: The numeric team value (e.g. 6413)
-compLevel: The match level ("qm"=Qualifiers, "qf"=Quarters, "sf"=Semis, "f"=Finals)
+compLevel: The match level ("qm"=Qualifiers, "sf"=Playoffs, "f"=Finals)
 matchNum: The match number (e.g 1)
 name: The scouters name
 
