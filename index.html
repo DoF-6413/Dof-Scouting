@@ -103,16 +103,6 @@
 		<form>
 			<div class="container">
 				<div class="row">
-					<div class="col">
-						<input type="button" value="Past QR codes" onclick="historicalQRModal()">
-					</div>
-					<div class="col text-end">
-						<input type="button" value="Clear QR code history" style="margin-right: 20px" onclick="if (confirm('Are you SURE you want to clear the entire QR code history?')) {localStorage.clear()}">
-						<input type="button" value="Reset all fields" onClick="resetFormForNextMatch()">
-					</div>
-				</div>
-				<!-- /.row -->
-				<div class="row">
 					<!-- This row is intended to hold a warning message if we could not load and parse the config data! -->
 					<p id="header_warning"></p>
 				</div>
@@ -458,7 +448,24 @@
 				</div>
 				<!-- /.row -->
 
+				<hr class="mt-4 mb-4">
+
+				<h3>Advanced area</h3>
+				<p>Don't mess with anything below this point unless you know what you're doing</p>
+				<div class="row">
+					<div class="col">
+						<input type="button" value="Past QR codes" onclick="historicalQRModal()">
+					</div>
+					<div class="col text-end">
+						<input type="button" value="Clear QR code history" style="margin-right: 20px" onclick="if (confirm('Are you SURE you want to clear the entire QR code history?')) {localStorage.clear()}">
+					</div>
+				</div>
+				<!-- /.row -->
+
+				<hr class="mt-4 mb-4">
+
 			</div>
+
 		</form>
 
 		<!-- QR code viewing modal -->
