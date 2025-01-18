@@ -29,13 +29,12 @@ teleNetMiss: Number of algae missed net during teleop
 teleProcessor: Number of algae scored in processor during teleop
 teleProcessorMiss: Number of algae missed processor during teleop
 
-climb: Did they climb (0=Not Attempted, 1=Shallow, 2=Deep, 3=Failed Shallow, 4=Failed Deep)
+climb: Did they climb (0=Not Attempted, 1=Shallow, 2=Deep, 3=Failed)
 noShow: The robot was a "No Show" for the match (0=No, 1=Yes)
-died: The robot stopped/died during the match (0=No, 1=Yes)
-playDefense: The robot played ONLY defense during the match (0=No, 1=Yes)
+died: The robot stopped/died/disabled/tipped during the match (0=No, 1=Yes)
+role: What was the robot's primary role during the match (0=Offense, 1=Defense)
 comments: Scouter comments
-
-tipped: REMOVED 2024 (RE-ADD 2025?)
 
 card: REMOVED 2025
 leave: REMOVED 2025
+park: REMOVED 2025
