@@ -32,9 +32,9 @@ teleProcessorMiss: Number of algae missed processor during teleop
 climb: Did they climb (0=Not Attempted, 1=Shallow, 2=Deep, 3=Failed)
 noShow: The robot was a "No Show" for the match (0=No, 1=Yes)
 died: The robot stopped/died/disabled/tipped during the match (0=No, 1=Yes)
+card: What card they received during the match (0=None, 1=Yellow, 2=Red)
 role: What was the robot's primary role during the match (0=Offense, 1=Defense)
 comments: Scouter comments
 
-card: REMOVED 2025
 leave: REMOVED 2025
 park: REMOVED 2025
