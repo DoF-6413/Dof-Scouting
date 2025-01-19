@@ -474,7 +474,8 @@
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h4 class="modal-title" id="modal-header"></h2>
+						<h4 class="modal-title" id="modal-header"></h4>
+						<p><span id="unscanned-count-text">0</span> Unscanned</p>
 					</div>
 					<div class="modal-body">
 						<div id="qrcode"></div> 
@@ -598,7 +599,8 @@
 					const len = parseInt(localStorage.getItem($("#input_e").val() + "length"))
 					localStorage.setItem($("#input_e").val() + len, JSON.stringify(entry));
 					localStorage.setItem($("#input_e").val() + "length", len + 1)
-
+					localStorage.setItem($("#input_e").val() + "unscanned", parseInt(localStorage.getItem($("#input_e").val() + "unscanned")) + 1);
+					
 					openModal(entry, len, 0);
 					}
 				}
@@ -617,6 +619,7 @@
 				new QRCode( document.getElementById( "qrcode" ), { text: qrData["data"], width: 480, height: 480, correctLevel:QRCode.CorrectLevel.L} );
 				$("#modal-header").text(qrData["header"]);
 				$("#modal").attr("data-selected-entry-index", qrIndex);
+				updateUnscannedText()
 				
 				if (qrData["scanned"]) {
 					$(".set-qr-scanned-btn")
@@ -682,7 +685,10 @@
 				const index = parseInt($("#modal").attr("data-selected-entry-index"));
 				var entry = JSON.parse(localStorage.getItem($("#input_e").val() + index))
 				const previouslyScanned = entry.scanned;
+				
+				const unscannedCount = parseInt(localStorage.getItem($("#input_e").val() + "unscanned"))
 
+				// Change the display of the scanned toggle
 				if (previouslyScanned) {
 					$(".set-qr-scanned-btn")
 						.addClass("btn-primary")
@@ -694,6 +700,10 @@
 						.removeClass("btn-primary")
 						.text("Scanned: ☑");
 				}
+
+				// Increment/decrement the unscanned count stored in local storage
+				localStorage.setItem($("#input_e").val() + "unscanned", unscannedCount + (previouslyScanned ? 1 : -1))
+				updateUnscannedText()
 
 				// Toggle the scanned boolean
 				entry.scanned = !previouslyScanned;
@@ -728,6 +738,11 @@
 				}
 
 				localStorage.setItem($("#input_e").val() + "length", 0);
+			}
+
+			function updateUnscannedText () {
+				const unscannedCount = localStorage.getItem($("#input_e").val() + "unscanned")
+				$("#unscanned-count-text").text(unscannedCount) 
 			}
 		</script>
 	</body>

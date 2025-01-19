@@ -470,5 +470,9 @@ window.onload = function () {
 	if (!localStorage.getItem($("#input_e").val() + "length")) {
 		localStorage.setItem($("#input_e").val() + "length", 0);
 	}
+	if (!localStorage.getItem($("#input_e").val() + "unscanned")) {
+		localStorage.setItem($("#input_e").val() + "unscanned", 0);
+	}
+
 };
 	
