@@ -467,8 +467,8 @@ window.onload = function () {
 	}
 
 	// Initialize localStorage
-	if (!JSON.parse(localStorage.getItem($("#input_e").text()))) {
-		localStorage.setItem($("#input_e").text(), JSON.stringify([]));
+	if (!localStorage.getItem($("#input_e").val() + "length")) {
+		localStorage.setItem($("#input_e").val() + "length", 0);
 	}
 };
 	

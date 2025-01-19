@@ -450,14 +450,15 @@
 
 				<hr class="mt-4 mb-4">
 
+				<!-- An area for advanced options which can normally be ignored by most scouters-->
 				<h3>Advanced area</h3>
-				<p>Don't mess with anything below this point unless you know what you're doing</p>
+				<p>Don't mess with anything below this unless you know what you're doing.</p>
 				<div class="row">
 					<div class="col">
 						<input type="button" value="Past QR codes" onclick="historicalQRModal()">
 					</div>
 					<div class="col text-end">
-						<input type="button" value="Clear QR code history" style="margin-right: 20px" onclick="if (confirm('Are you SURE you want to clear the entire QR code history?')) {localStorage.clear()}">
+						<input type="button" value="Clear QR code history" onclick="flushQRCodes()">
 					</div>
 				</div>
 				<!-- /.row -->
@@ -594,11 +595,11 @@
 						"header": headerText,
 						"scanned": false,
 					};
-					var storage = JSON.parse(localStorage.getItem($("#input_e").text()));
-					storage.push(entry);
-					localStorage.setItem($("#input_e").text(), JSON.stringify(storage));
+					const len = parseInt(localStorage.getItem($("#input_e").val() + "length"))
+					localStorage.setItem($("#input_e").val() + len, JSON.stringify(entry));
+					localStorage.setItem($("#input_e").val() + "length", len + 1)
 
-					openModal(entry, storage.length - 1, 0);
+					openModal(entry, len, 0);
 					}
 				}
 
@@ -648,34 +649,39 @@
 			// direction is 1 or -1 for next or previous 
 			// includeScanned is true when navigating all QR codes, false when only navigating unscanned QR codes, true when navigating all QR codes
 			function navigateQRModal (direction, includeScanned) {
-				const storage = JSON.parse(localStorage.getItem($("#input_e").text()));
-				var filteredStorage = storage.filter((entry) => !entry.scanned || includeScanned)
-
-				// If there are no remaining entries, close the modal and alert the user.
-				if (filteredStorage.length < 1) {
-					closeModal();
-					alert("No QR codes to display for this event.");
-					return;
-				}
+				// Gets the current length of QR codes for the event
+				const len = parseInt(localStorage.getItem($("#input_e").val() + "length"))
 
 				// Get the "old" QR code selection for the modal and use it to find the new index
-				const oldSelection = storage[parseInt($("#modal").attr("data-selected-entry-index"))];
-				const oldIndex = filteredStorage.indexOf(oldSelection);
-				const newIndex = oldIndex + direction;
-				const selectedEntry = filteredStorage[newIndex];
+				const oldIndex = parseInt($("#modal").attr("data-selected-entry-index"));
 
-				if (!selectedEntry) {
-					return;
+				var newIndex = oldIndex;
+				while (true) {
+					newIndex += direction
+					console.log(oldIndex, newIndex, len)
+					// If the new index is out of range, break out of the loop
+					if (newIndex < 0 || newIndex >= len) {
+						break;
+					}
+
+					const newItem = JSON.parse(localStorage.getItem($("#input_e").val() + newIndex));
+					
+					// If unscanned navigation, skip items that have been scanned
+					if (newItem.scanned && !includeScanned) {
+						continue;
+					}
+
+					// If the previous checks passed, open the modal
+					openModal(newItem, newIndex, 1);
+					break;
 				}
-
-				openModal(selectedEntry, storage.indexOf(selectedEntry), 1);
 			}
 
 			// Sets the QR designated with key as scanned
 			function setQRScanned () {
-				var storage = JSON.parse(localStorage.getItem($("#input_e").text()));
 				const index = parseInt($("#modal").attr("data-selected-entry-index"));
-				const previouslyScanned = storage[index].scanned;
+				var entry = JSON.parse(localStorage.getItem($("#input_e").val() + index))
+				const previouslyScanned = entry.scanned;
 
 				if (previouslyScanned) {
 					$(".set-qr-scanned-btn")
@@ -689,10 +695,9 @@
 						.text("Scanned: ☑");
 				}
 
-				console.log("setting scanned", previouslyScanned, index)
 				// Toggle the scanned boolean
-				storage[index].scanned = !previouslyScanned;
-				localStorage.setItem($("#input_e").text(), JSON.stringify(storage));
+				entry.scanned = !previouslyScanned;
+				localStorage.setItem($("#input_e").val() + index, JSON.stringify(entry));
 			}
 
 			function closeModal () {
@@ -702,16 +707,27 @@
 			// Opens modal showing past QR codes that can be navigated
 			// includeScanned determines which modal is opened - one for scanning unscanned codes or one for viewing all past codes
 			function historicalQRModal () {
-				const storage = JSON.parse(localStorage.getItem($("#input_e").text()));
-
-				if (storage.length < 1) {
-					alert("No unscanned QR codes to display for this event.");
+				if (parseInt(localStorage.getItem($("#input_e").val() + "length")) < 1) {
+					alert("No QR codes to display for this event.");
 					return;
 				}
 
-				const firstQR = storage[0];
+				const firstQR = JSON.parse(localStorage.getItem($("#input_e").val() + "0"));
 
-				openModal(firstQR, storage.indexOf(firstQR), 1);
+				openModal(firstQR, 0, 1);
+			}
+
+			function flushQRCodes () {
+				if (!confirm("Are you SURE you want to reset all QR codes for this event?")) {
+					return;
+				}
+
+				const len = parseInt(localStorage.getItem($("#input_e").val() + "length"));
+				for (i = 0; i < len; i++) {
+					localStorage.removeItem($("#input_e").val() + i);
+				}
+
+				localStorage.setItem($("#input_e").val() + "length", 0);
 			}
 		</script>
 	</body>
