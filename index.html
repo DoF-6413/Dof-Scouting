@@ -485,7 +485,7 @@
 					<div id="current-qrcode-modal-buttons" class="modal-button-row hidden">
 						<div class="modal-footer justify-content-between">
 							<a class="btn btn-danger flex-fill" href="javascript:closeModal(); resetFormForNextMatch()">Exit</a>
-							<a class="btn btn-primary set-qr-scanned-btn flex-fill" href="javascript:setQRScanned()">Scanned: ☐</a>
+							<a class="btn btn-primary set-qr-scanned-btn flex-fill" href="javascript:setQRScanned()">Scanned: <span class="fa-solid fa-square"></span></a>
 						</div>
 					</div>
 
@@ -501,7 +501,7 @@
 								<a class="btn btn-secondary flex-fill" href="javascript:navigateQRModal(1, true)">Next</a>
 							</div>
 							<div class="col">
-								<a class="btn btn-primary set-qr-scanned-btn flex-fill" href="javascript:setQRScanned();">Scanned: ☐</a>
+								<a class="btn btn-primary set-qr-scanned-btn flex-fill" href="javascript:setQRScanned();">Scanned: <span class="fa-solid fa-square"></span></a>
 								<a class="btn btn-danger flex-fill" href="javascript:closeModal()">Exit</a>
 							</div>
 						</div>
@@ -625,12 +625,16 @@
 					$(".set-qr-scanned-btn")
 						.addClass("btn-success")
 						.removeClass("btn-primary")
-						.text("Scanned: ☑");
+					$(".set-qr-scanned-btn > span")
+						.addClass("fa-square-check")
+						.removeClass("fa-square")
 				} else {
 					$(".set-qr-scanned-btn")
 						.addClass("btn-primary")
 						.removeClass("btn-success")
-						.text("Scanned: ☐");
+					$(".set-qr-scanned-btn > span")
+						.removeClass("fa-square-check")
+						.addClass("fa-square")
 
 				}
 				
@@ -693,12 +697,16 @@
 					$(".set-qr-scanned-btn")
 						.addClass("btn-primary")
 						.removeClass("btn-success")
-						.text("Scanned: ☐");
+					$(".set-qr-scanned-btn > span")
+						.removeClass("fa-square-check")
+						.addClass("fa-square")
 				} else {
 					$(".set-qr-scanned-btn")
 						.addClass("btn-success")
 						.removeClass("btn-primary")
-						.text("Scanned: ☑");
+					$(".set-qr-scanned-btn > span")
+						.addClass("fa-square-check")
+						.removeClass("fa-square")
 				}
 
 				// Increment/decrement the unscanned count stored in local storage
