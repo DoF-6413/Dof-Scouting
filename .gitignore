@@ -5,3 +5,5 @@
 
 # Python virtual environment files
 .venv
+
+.DS_STORE
