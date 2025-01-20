@@ -14,7 +14,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About This Project
 
-As most any FRC team who has done scouting can verify, scouting using paper is a massive pain.  A digital system for collecting scouting data is what every team needs.  FRC Team 6413 needed to find a system that worked for them.  During our search we saw the system built by FRC Team 2486 at an Arizona Robotics League event.  Since they offered to share it, we decided to give it a shot.  Our fork is a **very heavily** modified version of the one they are using in 2023.  We updated it to suite our needs and to collect the data we wanted to see.
+As most any FRC team who has done scouting can verify, scouting using paper is a massive pain.  A digital system for collecting scouting data is what every team needs.  FRC Team 6413 needed to find a system that worked for them.  During our search we saw the system built by FRC Team 2486 at an Arizona Robotics League event.  Since they offered to share it, we decided to give it a shot.  Our fork is a **very heavily** modified version of the one they used in 2023.  We updated it to suite our needs and to collect the data we wanted to see.
 
 The biggest attraction initially was the ability to use our tablets to scout at an event without needing to use Wi-Fi which is not permitted.  The collected data is put into a QR code which we scan using a handheld barcode scanner.  The data is then saved into either a MySQL or MongoDB database and visualized using Tableau or Streamlit.
 
