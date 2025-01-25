@@ -85,15 +85,19 @@ function clearScoutingFields() {
 	document.getElementById( "TeleProcessor-input" ).value = "0";
 	document.getElementById( "TeleProcessorMiss-input" ).value = "0";
 
-
 	// Clear the Climb input
 	clearRadioList( "TeleClimb-input" );
-
+	
 	document.getElementById( "NoShow-input" ).checked = false;
+
+	document.getElementById( "Card-0" ).checked = true;
+	document.getElementById( "Card-1" ).checked = false;
+	document.getElementById( "Card-2" ).checked = false;
 
 	document.getElementById( "Died-input" ).checked = false;
 
-	document.getElementById( "DefenseOnly-input" ).checked = false;
+	// Clear the Role input
+	clearRadioList( "Role-input" );
 
 	document.getElementById( "Comment-input" ).value = "";
 

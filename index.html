@@ -59,16 +59,7 @@
 				margin: 2rem 0rem;
 				}
 
-			/* Hiding the Amp Miss stuff while keeping our nice formatting */
-
-            .amp-disabled {
-                color: white;
-                background-color: white;
-                border-color: white; /* Also set border color to white, if applicable */
-            }
-
-			/* Adding color highlights to the speaker and amp input fields as subtle hint to scouts who may need it. */
-			
+			/* Adding color highlights to the coral and algae input fields as subtle hint to scouts who may need it. */
 			.coral {
 				color: rgb(255,255,255);
 				background-color: rgb(128,0,128)
@@ -363,7 +354,7 @@
 				<hr>
 				<hr>
 
-				<!-- Below this line are the TELEOP Speaker / Amp scoring options -->
+				<!-- Below this line are the TELEOP CORAL / ALGAE scoring options -->
 
 				<!-- The L4 row -->
 				<div class="row align-items-center">
@@ -572,43 +563,59 @@
 							<label class="form-check-label" for="TeleClimb-3">Failed</label>
 						</div>
 					</div>
+					
+					<div class="col">
+						<label>PRIMARY Role (Majority of match time)</label>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="Role-input" id="Role-0" value="0" required>
+							<label class="form-check-label" for="Role-0">Offense</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="Role-input" id="Role-1" value="1" required>
+							<label class="form-check-label" for="Role-1">Defense</label>
+						</div>
+					</div>
 
+					<div class="col">
+						<!-- The Card list -->
+						<div class="col">
+							<label>Card</label>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="Card-input" id="Card-0" value="0" checked required>
+								<label class="form-check-label" for="Card-0">None</label>
+							</div>	
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="Card-input" id="Card-1" value="1" required>
+								<label class="form-check-label" for="Card-1">Yellow</label>
+							</div>	
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="Card-input" id="Card-2" value="2" required>
+								<label class="form-check-label" for="Card-2">Red</label>
+							</div>	
+						</div>	
+					</div>	
+					
 					<!-- Assorted end game checkboxes -->
 					<!-- The Driver Skill, Plays Defense, Parked, and Handle Defense lists used to be here -->
-
 					<div class="col">
 						<!-- The NoShow checkbox -->
 						<div class="col" onchange="updateNoShow(event)">
 							<label class="form-check-label" for="NoShow-input">No Show</label>
 							<div class="form-check form-switch">
 								<input class="form-check-input" type="checkbox" role="switch" id="NoShow-input">
-							</div>
-						</div>
+							</div>	
+						</div>	
 
 						<!-- The Died/Disabled checkbox -->
 						<label class="form-check-label" for="Died-input">Died / Disabled (Comments!)</label>
 						<div class="form-check form-switch">
 							<input class="form-check-input" type="checkbox" role="switch" id="Died-input">
-						</div>
-
-						<!-- The Defense Only checkbox -->
-						<label class="form-check-label" for="DefenseOnly-input">Defense ONLY</label>
-						<div class="form-check form-switch">
-							<input class="form-check-input" type="checkbox" role="switch" id="DefenseOnly-input">
-						</div>
-
-                    </div>
-
-					<!-- The Card list selector used to be here -->
+						</div>	
+                    </div>	
 				</div>
 				<!-- /.row -->
 
-                <!-- The Microphone and Trap scoring were here. Removed them for Worlds. -->
-
-                <!-- The Microphone and Trap misses were here.  Removed them for Worlds. -->
-
 				<!-- Comments and QR button -->
-
 				<div class="row">
 					<div class="col">
 						<label class="form-label" for="Comment-input">Comment</label>
@@ -677,41 +684,44 @@
 				if ( $("#input_t:valid").length > 0 &&
 					 $("#input_m:valid").length > 0 &&
 					 $("#input_s:valid").length > 0 &&
-					 $("input[Name='TeleClimb-input']:valid").length > 0 ) {
+					 $("input[Name='TeleClimb-input']:valid").length > 0 &&
+					 $("input[Name='Role-input']:valid").length > 0
+					 ) {
 					var data =
 					"{" +
 					'"key":'      + JSON.stringify(Number($("#input_t").val())) +
 					',"cl":'      + JSON.stringify(getLevel()) +
 					',"mn":'      + JSON.stringify(Number($("#input_m").val())) +
 					',"i":'       + JSON.stringify($("#input_s").val()) +
-					',"al1":'      + JSON.stringify(Number($("#AutoL1-input").val())) +
-					',"al1m":'      + JSON.stringify(Number($("#AutoL1Miss-input").val())) +
-					',"al2":'      + JSON.stringify(Number($("#AutoL2-input").val())) +
-					',"al2m":'      + JSON.stringify(Number($("#AutoL2Miss-input").val())) +
-					',"al3":'      + JSON.stringify(Number($("#AutoL3-input").val())) +
-					',"al3m":'      + JSON.stringify(Number($("#AutoL3Miss-input").val())) +
-					',"al4":'      + JSON.stringify(Number($("#AutoL4-input").val())) +
-					',"al4m":'      + JSON.stringify(Number($("#AutoL4Miss-input").val())) +
-					',"an":'      + JSON.stringify(Number($("#AutoNet-input").val())) +
-					',"anm":'      + JSON.stringify(Number($("#AutoNetMiss-input").val())) +
-					',"ap":'      + JSON.stringify(Number($("#AutoProcessor-input").val())) +
-					',"apm":'      + JSON.stringify(Number($("#AutoProcessorMiss-input").val())) +
-					',"tl1":'      + JSON.stringify(Number($("#TeleL1-input").val())) +
-					',"tl1m":'      + JSON.stringify(Number($("#TeleL1Miss-input").val())) +
-					',"tl2":'      + JSON.stringify(Number($("#TeleL2-input").val())) +
-					',"tl2m":'      + JSON.stringify(Number($("#TeleL2Miss-input").val())) +
-					',"tl3":'      + JSON.stringify(Number($("#TeleL3-input").val())) +
-					',"tl3m":'      + JSON.stringify(Number($("#TeleL3Miss-input").val())) +
-					',"tl4":'      + JSON.stringify(Number($("#TeleL4-input").val())) +
-					',"tl4m":'      + JSON.stringify(Number($("#TeleL4Miss-input").val())) +
-					',"tn":'      + JSON.stringify(Number($("#TeleNet-input").val())) +
-					',"tnm":'      + JSON.stringify(Number($("#TeleNetMiss-input").val())) +
-					',"tp":'      + JSON.stringify(Number($("#TeleProcessor-input").val())) +
-					',"tpm":'      + JSON.stringify(Number($("#TeleProcessorMiss-input").val())) +
-					',"tc":'      + JSON.stringify(Number($("input[name='TeleClimb-input']:checked").val())) +
+					',"a1":'      + JSON.stringify(Number($("#AutoL4-input").val())) +
+					',"a2":'      + JSON.stringify(Number($("#AutoL4Miss-input").val())) +
+					',"a3":'      + JSON.stringify(Number($("#AutoL3-input").val())) +
+					',"a4":'      + JSON.stringify(Number($("#AutoL3Miss-input").val())) +
+					',"a5":'      + JSON.stringify(Number($("#AutoL2-input").val())) +
+					',"a6":'      + JSON.stringify(Number($("#AutoL2Miss-input").val())) +
+					',"a7":'      + JSON.stringify(Number($("#AutoL1-input").val())) +
+					',"a8":'      + JSON.stringify(Number($("#AutoL1Miss-input").val())) +
+					',"a9":'      + JSON.stringify(Number($("#AutoNet-input").val())) +
+					',"a10":'     + JSON.stringify(Number($("#AutoNetMiss-input").val())) +
+					',"a11":'     + JSON.stringify(Number($("#AutoProcessor-input").val())) +
+					',"a12":'     + JSON.stringify(Number($("#AutoProcessorMiss-input").val())) +
+					',"t1":'      + JSON.stringify(Number($("#TeleL4-input").val())) +
+					',"t2":'      + JSON.stringify(Number($("#TeleL4Miss-input").val())) +
+					',"t3":'      + JSON.stringify(Number($("#TeleL3-input").val())) +
+					',"t4":'      + JSON.stringify(Number($("#TeleL3Miss-input").val())) +
+					',"t5":'      + JSON.stringify(Number($("#TeleL2-input").val())) +
+					',"t6":'      + JSON.stringify(Number($("#TeleL2Miss-input").val())) +
+					',"t7":'      + JSON.stringify(Number($("#TeleL1-input").val())) +
+					',"t8":'      + JSON.stringify(Number($("#TeleL1Miss-input").val())) +
+					',"t9":'      + JSON.stringify(Number($("#TeleNet-input").val())) +
+					',"t10":'     + JSON.stringify(Number($("#TeleNetMiss-input").val())) +
+					',"t11":'     + JSON.stringify(Number($("#TeleProcessor-input").val())) +
+					',"t12":'     + JSON.stringify(Number($("#TeleProcessorMiss-input").val())) +
+					',"t13":'     + JSON.stringify(Number($("input[name='TeleClimb-input']:checked").val())) +
 					',"ns":'      + JSON.stringify(Number($("#NoShow-input").is(":checked"))) +
+					',"c":'       + JSON.stringify(Number($("input[name='Card-input']:checked").val())) +
 					',"d":'       + JSON.stringify(Number($("#Died-input").is(":checked"))) +
-					',"do":'      + JSON.stringify(Number($("#DefenseOnly-input").is(":checked"))) +
+					',"r":'       + JSON.stringify(Number($("input[name='Role-input']:checked").val())) +
 					',"co":'      + JSON.stringify($("#Comment-input").val()) +
 					"}";
 					
