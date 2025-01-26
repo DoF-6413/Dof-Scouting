@@ -6,3 +6,33 @@
 
 # Python virtual environment files
 .venv
+.env
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# PIP Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Mac stuff
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+

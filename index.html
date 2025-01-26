@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<!-- For 2025 we are adding the ability to locally cache the scouting data so that we do not have to always scan each match
+            before we can scout the next one.  Instead we will locally cache the data for every match no matter if it has been scanned or not.
+            The data can be pulled up and looked at later when it is more convenient.  We are using the Bot Breakdown sites for this which
+            caches data based on the event code so that we can easily look at only the current events data quickly but we can also retrieve
+            previous events data with a simple change of the event code.
+
+            We also need to update from Bootstrap 5.2.1 to 5.3+ in order to get light & dark mode from Bootstrap.  We added Font Awesome 6 Free
+            as well so we can use icons on the mode toggle button.  Details on its use are at https://docs.fontawesome.com/web/setup/host-yourself/webfonts
+            if you are interested.
+		-->
 		<title>Degrees of Freedom Scouting</title>
 		<script src="jquery-3.6.1.min.js"></script>
 		<script src="qrcode.min.js"></script>
@@ -17,20 +27,82 @@
 			"in favor" way of loading scripts.  We are loading locally over Wi-Fi and we only do it once so we dont need to be fancy and add
 			any deferred loading bits for now.
 		-->
-		<script src="2025_config.js"></script>
+		<script src="config.js"></script>
 		<script src="TBAInterface.js"></script>
 		<script src="DoFscouting.js"></script>
 		<script>
+            // Prevent an accidental page refresh or Back from forcing an unwanted page reload.
 			const onConfirmRefresh = function ( event ) {
 				event.preventDefault();
 				return event.returnValue = "Are you sure you want to leave the page?";
 			}
 			
-			window.addEventListener( "beforeunload", onConfirmRefresh, { capture: true } );
+		    window.addEventListener( "beforeunload", onConfirmRefresh, { capture: true } );
+
+            // Add a light/dark mode for the page along with a toggle function.  This required a newer Bootstrap and adding use of
+            // Font Awesome files to get the toggle button icon we will use.
+
+            var storedTheme = localStorage.getItem( 'theme' );
+
+            if ( storedTheme == null || storedTheme.length == 0 ) {
+                // No theme stored so use the browsers setting
+                if ( window.matchMedia && window.matchMedia( '(prefers-color-scheme: dark)' ).matches ) {
+                    $('html').attr('data-bs-theme', 'dark');
+                    localStorage.setItem( 'theme', 'dark' );
+                    storedTheme = 'dark';
+                    }
+                else {
+                    localStorage.setItem( 'theme', 'light' );
+                    storedTheme = 'light';
+                    }
+                }
+
+            if ( storedTheme === 'dark' ) {
+                $('html').attr('data-bs-theme', 'dark');
+                }
+
+            function toggleDarkMode() {
+                var currentTheme = $('html').attr('data-bs-theme');
+
+                // TODO: Toggle amp-disabled colors to be non-white when in dark mode.
+                if (currentTheme === 'dark') {
+                    $('html').removeAttr('data-bs-theme');
+                    localStorage.setItem('theme','light');
+                    }
+                else {
+                    $('html').attr('data-bs-theme', 'dark');
+                    localStorage.setItem('theme','dark');
+                    }
+                }
+
 		</script>
 		<link rel="stylesheet" href="bootstrap.min.css" />
+        <link rel="stylesheet" href="fontawesome.css">
 		<style>
-			body {
+            /*!
+             * Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com
+             * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+             * Copyright 2024 Fonticons, Inc.
+             */
+            :root, :host {
+                --fa-style-family-classic: 'Font Awesome 6 Free';
+                --fa-font-solid: normal 900 1em/1 'Font Awesome 6 Free';
+                }
+
+            @font-face {
+                font-family: 'Font Awesome 6 Free';
+                font-style: normal;
+                font-weight: 900;
+                font-display: block;
+                src: url("webfonts/fa-solid-900.woff2") format("woff2"), url("webfonts/fa-solid-900.ttf") format("truetype");
+                }
+
+            .fas,
+            .fa-solid {
+                font-weight: 900;
+                }
+
+            body {
 				touch-action: manipulation;
 				}
 			
@@ -39,6 +111,14 @@
 				margin-top: 1rem;
 				}
 			
+			.hidden  {
+				display:none !important;
+				}
+
+			.modal {
+				background-color: rgba(0,0,0,0.5);
+				}
+
 			.form-label {
 				margin-bottom: 0.1rem;
 				}
@@ -54,9 +134,21 @@
 				--bs-btn-font-size: 7.5rem;
 				}
 			
-			#qrcode img {
-				display: inline-block !important;
-				margin: 2rem 0rem;
+			/* Styles for modal footer buttons to create three columns of two buttons */
+			#history-qrcode-modal-buttons .btn {
+				display: block;
+				width:100%;
+				margin-bottom: 10px
+				}
+
+			/* QR codes changed in 2025 to being displayed in a modal dialog instead of being embedded in the page */
+			#qrcode {
+				margin: 1rem;
+				}
+
+			/* Image components that are children of the QR code should be set too 100% width */
+			#qrcode img{
+				width: 100%;
 				}
 
 			/* Adding color highlights to the coral and algae input fields as subtle hint to scouts who may need it. */
@@ -74,11 +166,12 @@
 		<form>
 			<div class="container">
 				<div class="row">
-					<div class="col text-end">
-						<input type="button" value="Reset all fields" onClick="resetFormForNextMatch()">
-					</div>
+					<div class="col align-items-left">
+                        <a href="javascript:toggleDarkMode();" class="btn btn-default"><i class="fa-solid fa-cloud-sun"></i></a>
+                    </div>
 				</div>
 				<!-- /.row -->
+
 				<div class="row">
 					<!-- This row is intended to hold a warning message if we could not load and parse the config data! -->
 					<p id="header_warning"></p>
@@ -624,13 +717,71 @@
 
 					<div class="col text-center">
 						<a href="javascript:updateQR()" class="btn btn-primary form-control" style="margin-top: 2.5rem;">Get Code</a>
-						<div id="qrcode"></div>
 					</div>
 				</div>
 				<!-- /.row -->
-	
+
+				<hr class="mt-4 mb-4">
+
+				<!-- An area for advanced options which can normally be ignored by most scouters-->
+				<h3>Advanced area</h3>
+				<p>Don't mess with anything below this unless you know what you're doing.</p>
+				<div class="row">
+					<div class="col">
+						<input type="button" value="Past QR codes" onclick="historicalQRModal()">
+					</div>
+					<div class="col text-end">
+						<input type="button" value="Clear QR code history" onclick="flushQRCodes()">
+					</div>
+				</div>
+				<!-- /.row -->
+
+				<hr class="mt-4 mb-4">
+
 			</div>
+
 		</form>
+
+		<!-- QR code viewing modal -->
+		<div class="modal" id="modal">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title col" id="modal-header"></h4>
+						<p class="col text-end"><span id="unscanned-count-text">0</span> Unscanned</p>
+					</div>
+					<div class="modal-body">
+						<div id="qrcode"></div> 
+					</div>
+
+					<!-- Modal footer buttons for single popup on current QR code-->
+					<div id="current-qrcode-modal-buttons" class="modal-button-row hidden">
+						<div class="modal-footer justify-content-between">
+							<a class="btn btn-danger flex-fill" href="javascript:closeModal(); resetFormForNextMatch()">Exit</a>
+							<a class="btn btn-primary set-qr-scanned-btn flex-fill" href="javascript:setQRScanned()">Scanned: <span class="fa-solid fa-square"></span></a>
+						</div>
+					</div>
+
+					<!-- Modal footer buttons for viewing historical QR codes-->
+					<div id="history-qrcode-modal-buttons" class="modal-button-row hidden">
+						<div class="modal-footer">
+							<div class="col">
+								<a class="btn btn-secondary flex-fill" href="javascript:navigateQRModal(-1, false)">Previous Unscanned</a>
+								<a class="btn btn-secondary flex-fill" href="javascript:navigateQRModal(-1,true)">Previous</a>
+							</div>
+							<div class="col">
+								<a class="btn btn-secondary flex-fill" href="javascript:navigateQRModal(1, false)">Next Unscanned</a>
+								<a class="btn btn-secondary flex-fill" href="javascript:navigateQRModal(1, true)">Next</a>
+							</div>
+							<div class="col">
+								<a class="btn btn-primary set-qr-scanned-btn flex-fill" href="javascript:setQRScanned();">Scanned: <span class="fa-solid fa-square"></span></a>
+								<a class="btn btn-danger flex-fill" href="javascript:closeModal()">Exit</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
 		<script type="text/javascript">
 			/**
@@ -725,9 +876,169 @@
 					',"co":'      + JSON.stringify($("#Comment-input").val()) +
 					"}";
 					
-					new QRCode( document.getElementById( "qrcode" ), { text: data, width: 480, height: 480, correctLevel:QRCode.CorrectLevel.L} );
+					var headerText = `${levelKeyToString(getLevel())} ${$("#input_m").val()} - ${$("#input_t").val()}`;
+					
+					const entry = {
+						"data": data,
+						"header": headerText,
+						"scanned": false,
+					};
+					const len = parseInt(localStorage.getItem($("#input_e").val() + "length"))
+					localStorage.setItem($("#input_e").val() + len, JSON.stringify(entry));
+					localStorage.setItem($("#input_e").val() + "length", len + 1)
+					localStorage.setItem($("#input_e").val() + "unscanned", parseInt(localStorage.getItem($("#input_e").val() + "unscanned")) + 1);
+					
+					openModal(entry, len, 0);
 					}
 				}
+
+			/*
+			qrcode: The data string of the qr code content
+			headerText: The text that should be displayed as the modal header
+			type: The modal type, determining what buttons are displayed. 0 = the current QR code, 1 - unscanned QR code history, 2 - all QR code history
+			qrIndex: The index of the currently selected entry in the list of entries under an event code
+			*/
+			function openModal (qrData, qrIndex, type) {
+				// Reset the modal
+				$("#qrcode").html("");
+
+				// Set up the modal for the QR
+				new QRCode( document.getElementById( "qrcode" ), { text: qrData["data"], width: 480, height: 480, correctLevel:QRCode.CorrectLevel.L} );
+				$("#modal-header").text(qrData["header"]);
+				$("#modal").attr("data-selected-entry-index", qrIndex);
+				updateUnscannedText()
+				
+				if (qrData["scanned"]) {
+					$(".set-qr-scanned-btn")
+						.addClass("btn-success")
+						.removeClass("btn-primary")
+					$(".set-qr-scanned-btn > span")
+						.addClass("fa-square-check")
+						.removeClass("fa-square")
+				} else {
+					$(".set-qr-scanned-btn")
+						.addClass("btn-primary")
+						.removeClass("btn-success")
+					$(".set-qr-scanned-btn > span")
+						.removeClass("fa-square-check")
+						.addClass("fa-square")
+
+				}
+				
+				switch (type) {
+					case 0: 
+						$("#current-qrcode-modal-buttons").removeClass("hidden");
+						$("#history-qrcode-modal-buttons").addClass("hidden");
+						break;
+					case 1:
+						$("#current-qrcode-modal-buttons").addClass("hidden");
+						$("#history-qrcode-modal-buttons").removeClass("hidden");
+						break;
+				}
+
+				$("#modal").css("display", "block");
+			}
+
+			// Returns next or previous QR code
+			// direction is 1 or -1 for next or previous 
+			// includeScanned is true when navigating all QR codes, false when only navigating unscanned QR codes, true when navigating all QR codes
+			function navigateQRModal (direction, includeScanned) {
+				// Gets the current length of QR codes for the event
+				const len = parseInt(localStorage.getItem($("#input_e").val() + "length"))
+
+				// Get the "old" QR code selection for the modal and use it to find the new index
+				const oldIndex = parseInt($("#modal").attr("data-selected-entry-index"));
+
+				var newIndex = oldIndex;
+				while (true) {
+					newIndex += direction
+					console.log(oldIndex, newIndex, len)
+					// If the new index is out of range, break out of the loop
+					if (newIndex < 0 || newIndex >= len) {
+						break;
+					}
+
+					const newItem = JSON.parse(localStorage.getItem($("#input_e").val() + newIndex));
+					
+					// If unscanned navigation, skip items that have been scanned
+					if (newItem.scanned && !includeScanned) {
+						continue;
+					}
+
+					// If the previous checks passed, open the modal
+					openModal(newItem, newIndex, 1);
+					break;
+				}
+			}
+
+			// Sets the QR designated with key as scanned
+			function setQRScanned () {
+				const index = parseInt($("#modal").attr("data-selected-entry-index"));
+				var entry = JSON.parse(localStorage.getItem($("#input_e").val() + index))
+				const previouslyScanned = entry.scanned;
+				
+				const unscannedCount = parseInt(localStorage.getItem($("#input_e").val() + "unscanned"))
+
+				// Change the display of the scanned toggle
+				if (previouslyScanned) {
+					$(".set-qr-scanned-btn")
+						.addClass("btn-primary")
+						.removeClass("btn-success")
+					$(".set-qr-scanned-btn > span")
+						.removeClass("fa-square-check")
+						.addClass("fa-square")
+				} else {
+					$(".set-qr-scanned-btn")
+						.addClass("btn-success")
+						.removeClass("btn-primary")
+					$(".set-qr-scanned-btn > span")
+						.addClass("fa-square-check")
+						.removeClass("fa-square")
+				}
+
+				// Increment/decrement the unscanned count stored in local storage
+				localStorage.setItem($("#input_e").val() + "unscanned", unscannedCount + (previouslyScanned ? 1 : -1))
+				updateUnscannedText()
+
+				// Toggle the scanned boolean
+				entry.scanned = !previouslyScanned;
+				localStorage.setItem($("#input_e").val() + index, JSON.stringify(entry));
+			}
+
+			function closeModal () {
+				$("#modal").css("display", "none");
+			}
+
+			// Opens modal showing past QR codes that can be navigated
+			// includeScanned determines which modal is opened - one for scanning unscanned codes or one for viewing all past codes
+			function historicalQRModal () {
+				if (parseInt(localStorage.getItem($("#input_e").val() + "length")) < 1) {
+					alert("No QR codes to display for this event.");
+					return;
+				}
+
+				const firstQR = JSON.parse(localStorage.getItem($("#input_e").val() + "0"));
+
+				openModal(firstQR, 0, 1);
+			}
+
+			function flushQRCodes () {
+				if (!confirm("Are you SURE you want to reset all QR codes for this event?")) {
+					return;
+				}
+
+				const len = parseInt(localStorage.getItem($("#input_e").val() + "length"));
+				for (i = 0; i < len; i++) {
+					localStorage.removeItem($("#input_e").val() + i);
+				}
+
+				localStorage.setItem($("#input_e").val() + "length", 0);
+			}
+
+			function updateUnscannedText () {
+				const unscannedCount = localStorage.getItem($("#input_e").val() + "unscanned")
+				$("#unscanned-count-text").text(unscannedCount) 
+			}
 		</script>
 	</body>
 </html>						
