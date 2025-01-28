@@ -1,6 +1,8 @@
 <a name="readme-top"></a>
 
 <!-- PROJECT LOGO/HEADER -->
+  <h1 align="center">THIS REPOSITORY IS NO LONGER UNDER ACTIVE USE OR DEVELOPMENT.  IT REMAINS HERE SOLELY FOR HISTORICAL PURPOSES!</h3>
+
   <h3 align="center">Degrees of Freedom Scouting</h3>
 
   <p align="center">
